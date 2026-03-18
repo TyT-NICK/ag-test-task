@@ -1,4 +1,8 @@
 {
+  "Header": {
+    "products": "Продукты",
+    "searchPlaceholder": "Найти"
+  },
   "common": {
     "loading": "Загрузка..."
   },

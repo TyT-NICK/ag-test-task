@@ -40,6 +40,10 @@
   transition: transform 0.15s ease;
 }
 
+.positioner {
+  z-index: 100;
+}
+
 /* ── Popup ────────────────────────────────────────────────── */
 
 .popup {

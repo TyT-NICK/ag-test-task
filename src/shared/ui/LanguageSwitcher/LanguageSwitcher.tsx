@@ -24,7 +24,8 @@ export function LanguageSwitcher() {
   const router = useRouter();
   const pathname = usePathname();
 
-  function handleChange(newLocale: string) {
+  function handleChange(newLocale: string | null) {
+    if (!newLocale) return;
     router.replace(pathname, { locale: newLocale });
   }
 
@@ -37,7 +38,7 @@ export function LanguageSwitcher() {
         </BaseSelect.Icon>
       </BaseSelect.Trigger>
       <BaseSelect.Portal>
-        <BaseSelect.Positioner sideOffset={4} align="end">
+        <BaseSelect.Positioner sideOffset={4} align="end" className={styles.positioner}>
           <BaseSelect.Popup className={styles.popup}>
             <BaseSelect.List className={styles.list}>
               {routing.locales.map((loc) => (
