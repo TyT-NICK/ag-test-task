@@ -36,7 +36,7 @@ export async function proxyLogin(request: NextRequest): Promise<NextResponse> {
     const data: SessionUser = await response.json();
 
     if (!response.ok) {
-      throw new ApiError(response.status, "Login failed");
+      throw new ApiError(401, "Login failed");
     }
 
     const { accessToken, refreshToken, ...profile } = data;

@@ -12,6 +12,12 @@
     "or": "or",
     "noAccount": "Don't have an account?",
     "createAccount": "Create one",
-    "createAccountPopover": "Not implemented in this test task. Use credentials from"
+    "createAccountPopover": "Not implemented in this test task. Use credentials from",
+    "createAccountPopoverHint": "Use username and password, not email.",
+    "errors": {
+      "invalidCredentials": "Invalid username or password",
+      "serviceUnavailable": "The service is temporarily unavailable. Please try again later.",
+      "default": "Something went wrong. Please try again."
+    }
   }
 }

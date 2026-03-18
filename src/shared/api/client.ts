@@ -26,7 +26,11 @@ client.interceptors.response.use(
     const original: InternalAxiosRequestConfig & { _retry?: boolean } =
       error.config;
 
-    if (error.response?.status !== 401 || original._retry) {
+    if (
+      error.response?.status !== 401 ||
+      original._retry ||
+      original.url === "/auth/login"
+    ) {
       return Promise.reject(error);
     }
 

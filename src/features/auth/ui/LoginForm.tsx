@@ -3,6 +3,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { Controller } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/shared/i18n/navigation";
+import { isAxiosError } from "axios";
+import { toast } from "react-toastify";
 import { z } from "zod";
 import { loginApi } from "../api/loginApi";
 import { loginCredentialsSchema } from "@/entities/session";
@@ -27,8 +30,22 @@ type LoginFormValues = z.output<typeof loginFormSchema>;
 
 export function LoginForm() {
   const t = useTranslations("LoginForm");
+  const router = useRouter();
 
-  const { mutate: login, isPending } = useMutation({ mutationFn: loginApi });
+  const { mutate: login, isPending } = useMutation({
+    mutationFn: loginApi,
+    onSuccess: () => router.replace("/"),
+    onError: (error) => {
+      const status = isAxiosError(error) ? error.response?.status : undefined;
+      const key =
+        status === 401
+          ? "errors.invalidCredentials"
+          : status === 503
+            ? "errors.serviceUnavailable"
+            : "errors.default";
+      toast.error(t(key));
+    },
+  });
 
   const {
     register,
@@ -40,6 +57,7 @@ export function LoginForm() {
   });
 
   function onSubmit(values: LoginFormValues) {
+    console.log("submit");
     login(values);
   }
 
@@ -105,6 +123,8 @@ export function LoginForm() {
           >
             dummyjson.com/users
           </a>
+          <br />
+          <span style={{ opacity: 0.6 }}>{t("createAccountPopoverHint")}</span>
         </Popover>
       </p>
     </Paper>
