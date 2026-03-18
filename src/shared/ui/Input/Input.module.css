@@ -1,0 +1,95 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #232323;
+  line-height: 1;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 54px;
+  background: #ffffff;
+  border: 1.5px solid #ededed;
+  border-radius: 12px;
+  transition: border-color 0.15s ease;
+
+  &:focus-within {
+    border-color: #242edb;
+  }
+}
+
+.inputWrapperError {
+  border-color: #ef4444;
+
+  &:focus-within {
+    border-color: #ef4444;
+  }
+}
+
+.iconLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding-left: 16px;
+  color: #c9c9c9;
+}
+
+.iconRight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #c9c9c9;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: #232323;
+  }
+}
+
+.input {
+  flex: 1;
+  height: 100%;
+  padding: 0 16px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 1rem;
+  color: #232323;
+  min-width: 0;
+
+  &::placeholder {
+    color: #c9c9c9;
+  }
+
+  &[data-disabled] {
+    opacity: 0.48;
+    cursor: not-allowed;
+  }
+}
+
+.inputWithIcon {
+  padding-left: 8px;
+}
+
+.errorMessage {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #ef4444;
+  line-height: 1;
+}
