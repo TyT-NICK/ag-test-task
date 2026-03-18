@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Controller } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/shared/i18n/navigation";
+import { useSearchParams } from "next/navigation";
 import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { z } from "zod";
@@ -31,10 +32,11 @@ type LoginFormValues = z.output<typeof loginFormSchema>;
 export function LoginForm() {
   const t = useTranslations("LoginForm");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const { mutate: login, isPending } = useMutation({
     mutationFn: loginApi,
-    onSuccess: () => router.replace("/"),
+    onSuccess: () => router.replace(searchParams.get("from") ?? "/"),
     onError: (error) => {
       const status = isAxiosError(error) ? error.response?.status : undefined;
       const key =
