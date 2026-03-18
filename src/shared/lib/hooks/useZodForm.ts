@@ -8,7 +8,7 @@ const useZodForm = <TShape extends ZodRawShape>(
 ) => {
   return useForm<z.output<ZodObject<TShape>>>({
     resolver: standardSchemaResolver(schema),
-    mode: "onBlur",
+    mode: "onSubmit",
     ...useFormProps,
   });
 };

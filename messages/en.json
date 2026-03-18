@@ -1,5 +1,16 @@
 {
   "common": {
     "loading": "Loading..."
+  },
+  "LoginForm": {
+    "title": "Welcome!",
+    "subtitle": "Please sign in to your account",
+    "username": "Login",
+    "password": "Password",
+    "rememberMe": "Remember me",
+    "submit": "Sign in",
+    "or": "or",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create one"
   }
 }

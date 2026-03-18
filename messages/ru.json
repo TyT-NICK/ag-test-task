@@ -1,5 +1,16 @@
 {
   "common": {
     "loading": "Загрузка..."
+  },
+  "LoginForm": {
+    "title": "Добро пожаловать!",
+    "subtitle": "Пожалуйста, авторизируйтесь",
+    "username": "Логин",
+    "password": "Пароль",
+    "rememberMe": "Запомнить меня",
+    "submit": "Войти",
+    "or": "или",
+    "noAccount": "Нет аккаунта?",
+    "createAccount": "Создать"
   }
 }

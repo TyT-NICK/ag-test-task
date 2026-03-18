@@ -1,19 +1,16 @@
 .root {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   width: 100%;
 }
 
-.label {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: #232323;
-  line-height: 1;
+/* Reserve space above the input for the floated label */
+.rootWithLabel {
+  padding-top: 24px;
 }
 
 .inputWrapper {
-  position: relative;
   display: flex;
   align-items: center;
   height: 54px;
@@ -61,8 +58,15 @@
   }
 }
 
-.input {
+.inputInner {
+  position: relative;
   flex: 1;
+  height: 100%;
+  min-width: 0;
+}
+
+.input {
+  width: 100%;
   height: 100%;
   padding: 0 16px;
   background: transparent;
@@ -71,7 +75,6 @@
   font-family: inherit;
   font-size: 1rem;
   color: #232323;
-  min-width: 0;
 
   &::placeholder {
     color: #c9c9c9;
@@ -83,11 +86,74 @@
   }
 }
 
-.inputWithIcon {
+.inputInnerWithIcon .input {
   padding-left: 8px;
 }
 
+/* ─── Floating label ─────────────────────────────────────── */
+
+/*
+ * Label is a direct child of .root, positioned absolutely.
+ * Initial state: visually centered inside the input.
+ *   top = padding-top(24px) + border(1.5px) + half-input-height(27px)
+ *   left = 16px (aligns with input text start, no icon)
+ */
+.floatingLabel {
+  position: absolute;
+  left: 16px;
+  top: calc(24px + 1.5px + 27px);
+  transform: translateY(-50%);
+  font-size: 1rem;
+  font-weight: 400;
+  color: #c9c9c9;
+  pointer-events: none;
+  transition:
+    top 0.15s ease,
+    left 0.15s ease,
+    transform 0.15s ease,
+    font-size 0.15s ease,
+    font-weight 0.15s ease,
+    color 0.15s ease;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/*
+ * When there's an icon, shift initial position right to align
+ * with text: iconLeft padding(16px) + icon width(18px) + input gap(8px)
+ */
+.root[data-has-icon] .floatingLabel {
+  left: 42px;
+}
+
+/* Floated: sits in the padding-top area, always at left: 0 */
+.root:has(.input:not(:placeholder-shown)) .floatingLabel,
+.root:has(.input:focus) .floatingLabel {
+  top: 5px;
+  left: 0;
+  transform: translateY(0);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #232323;
+}
+
+/* Error label */
+.floatingLabelError {
+  color: #ef4444 !important;
+}
+
+/* ─────────────────────────────────────────────────────────── */
+
+.errorContainer {
+  /* overflow: hidden; */
+}
+
 .errorMessage {
+  display: block;
+  padding-top: 6px;
   font-size: 0.75rem;
   font-weight: 400;
   color: #ef4444;
