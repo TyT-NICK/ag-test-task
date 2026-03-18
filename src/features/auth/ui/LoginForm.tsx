@@ -15,6 +15,7 @@ import {
   Button,
   Checkbox,
   Input,
+  LanguageSwitcher,
   Logo,
   Paper,
   Popover,
@@ -65,6 +66,9 @@ export function LoginForm() {
 
   return (
     <Paper className={styles.card}>
+      <div className={styles.langSwitcher}>
+        <LanguageSwitcher />
+      </div>
       <Logo size="md" />
       <div className={styles.header}>
         <h1 className={styles.title}>{t("title")}</h1>

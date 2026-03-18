@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Checkbox, Input, Logo, Paper, Popover, Tooltip, UserIcon } from "@/shared/ui";
+import { Button, Checkbox, Input, LanguageSwitcher, Logo, Paper, Popover, Select, Tooltip, UserIcon } from "@/shared/ui";
 import styles from "./UiKitPage.module.css";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -121,6 +121,46 @@ export function UiKitPage() {
               dummyjson.com/users
             </a>
           </Popover>
+        </Row>
+      </Section>
+
+      <Section title="Select">
+        <Row label="Default">
+          <Select
+            options={[
+              { value: "1", label: "Option 1" },
+              { value: "2", label: "Option 2" },
+              { value: "3", label: "Option 3" },
+            ]}
+            placeholder="Select an option"
+          />
+        </Row>
+        <Row label="With label">
+          <Select
+            label="Category"
+            defaultValue="2"
+            options={[
+              { value: "1", label: "Option 1" },
+              { value: "2", label: "Option 2" },
+              { value: "3", label: "Option 3" },
+            ]}
+          />
+        </Row>
+        <Row label="Disabled">
+          <Select
+            defaultValue="1"
+            disabled
+            options={[
+              { value: "1", label: "Option 1" },
+              { value: "2", label: "Option 2" },
+            ]}
+          />
+        </Row>
+      </Section>
+
+      <Section title="Language Switcher">
+        <Row label="Default">
+          <LanguageSwitcher />
         </Row>
       </Section>
 

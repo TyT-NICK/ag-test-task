@@ -1,8 +1,11 @@
 export { Button } from "./Button";
 export { Checkbox } from "./Checkbox";
 export { Input } from "./Input";
+export { LanguageSwitcher } from "./LanguageSwitcher";
 export { Logo } from "./Logo";
 export { Paper } from "./Paper";
 export { Popover } from "./Popover";
+export { Select } from "./Select";
+export type { SelectOption } from "./Select";
 export { Tooltip } from "./Tooltip";
 export * from "./icons";
