@@ -37,7 +37,7 @@ export function LoginForm() {
 
   const { mutate: login, isPending } = useMutation({
     mutationFn: loginApi,
-    onSuccess: () => router.replace(searchParams.get("from") ?? "/"),
+    onSuccess: () => router.replace(searchParams?.get("from") ?? "/"),
     onError: (error) => {
       const status = isAxiosError(error) ? error.response?.status : undefined;
       const key =

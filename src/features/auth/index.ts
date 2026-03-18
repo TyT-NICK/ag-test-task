@@ -1,4 +1,4 @@
-export { proxyLogin } from './api/loginProxy';
-export { proxyRefresh } from './api/refreshProxy';
-export { proxyMe } from './api/meProxy';
+export { proxyLogin } from './api/proxyLogin';
+export { proxyRefresh } from './api/proxyRefresh';
+export { proxyMe } from './api/proxyMe';
 export { LoginForm } from './ui/LoginForm';
