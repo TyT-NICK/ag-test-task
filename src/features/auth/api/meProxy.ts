@@ -6,7 +6,7 @@ import { handleApiError } from "@/shared/api/handleApiError";
 
 export async function proxyMe(request: NextRequest): Promise<NextResponse> {
   try {
-    const accessToken = request.headers.get("authorization");
+    const accessToken = request.cookies.get("accessToken")?.value;
 
     if (!accessToken) {
       throw new ApiError(401, "Unauthorized");
@@ -15,7 +15,7 @@ export async function proxyMe(request: NextRequest): Promise<NextResponse> {
     let response: Response;
     try {
       response = await fetch(`${API_URL}/auth/me`, {
-        headers: { authorization: accessToken },
+        headers: { authorization: `Bearer ${accessToken}` },
       });
     } catch {
       throw new ApiError(503, "Upstream service unavailable");

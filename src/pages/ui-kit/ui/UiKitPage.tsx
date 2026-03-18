@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Checkbox, Input, Logo, Paper, UserIcon } from "@/shared/ui";
+import { Button, Checkbox, Input, Logo, Paper, Popover, Tooltip, UserIcon } from "@/shared/ui";
 import styles from "./UiKitPage.module.css";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
@@ -88,6 +88,39 @@ export function UiKitPage() {
         </Row>
         <Row label="Disabled">
           <Input label="Логин" placeholder="Введите логин" disabled />
+        </Row>
+      </Section>
+
+      <Section title="Tooltip">
+        <Row label="Default">
+          <Tooltip content="Подсказка">
+            <Button variant="secondary">Hover me</Button>
+          </Tooltip>
+        </Row>
+        <Row label="Long content">
+          <Tooltip content="Это более длинная подсказка, которая переносится на несколько строк при необходимости">
+            <Button variant="secondary">Long tooltip</Button>
+          </Tooltip>
+        </Row>
+      </Section>
+
+      <Section title="Popover">
+        <Row label="Default">
+          <Popover trigger={<Button variant="secondary">Click me</Button>}>
+            Это содержимое поповера. Здесь можно разместить любой контент.
+          </Popover>
+        </Row>
+        <Row label="With link">
+          <Popover trigger={<Button variant="secondary">With link</Button>}>
+            Используйте данные с{" "}
+            <a
+              href="https://dummyjson.com/users"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              dummyjson.com/users
+            </a>
+          </Popover>
         </Row>
       </Section>
 

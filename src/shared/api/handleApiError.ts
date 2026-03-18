@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { AppError, ValidationError } from "../lib/error";
 
 export function handleApiError(error: unknown): NextResponse {
+  console.log("🚀 ~ handleApiError ~ error:", error);
   if (error instanceof ValidationError) {
     return NextResponse.json(
       { error: error.code, message: error.message, fields: error.fields },

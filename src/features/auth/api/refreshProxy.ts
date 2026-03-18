@@ -3,21 +3,25 @@ import { API_URL } from "@/shared/config/env";
 import { SessionUser } from "@/entities/session";
 import { ApiError } from "@/shared/lib/error";
 import { handleApiError } from "@/shared/api/handleApiError";
+import { setAuthCookies } from "./setAuthCookies";
 
 export async function proxyRefresh(request: NextRequest): Promise<NextResponse> {
   try {
-    const refreshToken = request.cookies.get("refreshToken")?.value;
+    const refreshTokenCookie = request.cookies.get("refreshToken");
 
-    if (!refreshToken) {
+    if (!refreshTokenCookie?.value) {
       throw new ApiError(401, "No refresh token");
     }
+
+    // Preserve the original persistence choice recorded at login
+    const persist = request.cookies.get("persist")?.value === "1";
 
     let response: Response;
     try {
       response = await fetch(`${API_URL}/auth/refresh`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ refreshToken }),
+        body: JSON.stringify({ refreshToken: refreshTokenCookie.value }),
       });
     } catch {
       throw new ApiError(503, "Upstream service unavailable");
@@ -29,16 +33,10 @@ export async function proxyRefresh(request: NextRequest): Promise<NextResponse> 
       throw new ApiError(response.status, "Token refresh failed");
     }
 
-    const { refreshToken: newRefreshToken, ...clientData } = data;
+    const { accessToken, refreshToken: newRefreshToken, ...profile } = data;
 
-    const nextResponse = NextResponse.json(clientData);
-    nextResponse.cookies.set("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-    });
+    const nextResponse = NextResponse.json(profile);
+    setAuthCookies(nextResponse, { accessToken, refreshToken: newRefreshToken }, persist);
 
     return nextResponse;
   } catch (error) {

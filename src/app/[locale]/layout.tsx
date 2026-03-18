@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/shared/i18n/routing";
+import { ClientProviders } from "../_providers/ClientProviders";
 import "../globals.css";
 
 const inter = Inter({
@@ -34,9 +34,9 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={`${inter.variable} antialiased root`}>
-        <NextIntlClientProvider messages={messages}>
+        <ClientProviders messages={messages} locale={locale}>
           {children}
-        </NextIntlClientProvider>
+        </ClientProviders>
       </body>
     </html>
   );

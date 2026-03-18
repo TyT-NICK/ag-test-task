@@ -1,0 +1,47 @@
+.trigger {
+  cursor: pointer;
+}
+
+.popup {
+  max-width: 280px;
+  padding: 12px 16px;
+  background: #232323;
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.5;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  outline: none;
+
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+  transform-origin: var(--transform-origin);
+
+  &[data-open] {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &[data-closed] {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.arrow {
+  width: 10px;
+  height: 5px;
+  fill: #232323;
+}
+
+.link {
+  color: #a5b4fc;
+  text-decoration: underline;
+  word-break: break-all;
+
+  &:hover {
+    color: #c7d2fe;
+  }
+}

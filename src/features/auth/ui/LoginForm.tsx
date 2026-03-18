@@ -1,11 +1,22 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import { Controller } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
+import { loginApi } from "../api/loginApi";
 import { loginCredentialsSchema } from "@/entities/session";
 import useZodForm from "@/shared/lib/hooks/useZodForm";
-import { Button, Checkbox, Input, Logo, Paper, UserIcon } from "@/shared/ui";
+import {
+  Button,
+  Checkbox,
+  Input,
+  Logo,
+  Paper,
+  Popover,
+  UserIcon,
+} from "@/shared/ui";
+import popoverStyles from "@/shared/ui/Popover/Popover.module.css";
 import styles from "./LoginForm.module.css";
 
 const loginFormSchema = loginCredentialsSchema.extend({
@@ -17,22 +28,19 @@ type LoginFormValues = z.output<typeof loginFormSchema>;
 export function LoginForm() {
   const t = useTranslations("LoginForm");
 
+  const { mutate: login, isPending } = useMutation({ mutationFn: loginApi });
+
   const {
     register,
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useZodForm(loginFormSchema, {
     defaultValues: { username: "", password: "", rememberMe: false },
   });
 
-  async function onSubmit(values: LoginFormValues) {
-    const { rememberMe: _rememberMe, ...credentials } = values;
-    await fetch("/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials),
-    });
+  function onSubmit(values: LoginFormValues) {
+    login(values);
   }
 
   return (
@@ -72,7 +80,7 @@ export function LoginForm() {
             />
           )}
         />
-        <Button type="submit" variant="primary" disabled={isSubmitting}>
+        <Button type="submit" variant="primary" disabled={isPending}>
           {t("submit")}
         </Button>
       </form>
@@ -83,7 +91,21 @@ export function LoginForm() {
       </div>
       <p className={styles.footer}>
         {t("noAccount")}{" "}
-        <span className={styles.createLink}>{t("createAccount")}</span>
+        <Popover
+          trigger={
+            <span className={styles.createLink}>{t("createAccount")}</span>
+          }
+        >
+          {t("createAccountPopover")}{" "}
+          <a
+            href="https://dummyjson.com/users"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={popoverStyles.link}
+          >
+            dummyjson.com/users
+          </a>
+        </Popover>
       </p>
     </Paper>
   );

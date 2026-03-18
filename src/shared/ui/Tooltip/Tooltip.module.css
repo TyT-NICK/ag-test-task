@@ -1,0 +1,37 @@
+.trigger {
+  cursor: pointer;
+}
+
+.popup {
+  max-width: 260px;
+  padding: 10px 14px;
+  background: #232323;
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  line-height: 1.5;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+
+  /* enter */
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+  transform-origin: var(--transform-origin);
+
+  &[data-open] {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  &[data-closed] {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+.arrow {
+  width: 10px;
+  height: 5px;
+  fill: #232323;
+}

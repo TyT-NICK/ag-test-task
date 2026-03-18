@@ -1,23 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { API_URL, DEFAULT_EXPIRES_IN_MINS } from "@/shared/config/env";
 import { loginCredentialsSchema, SessionUser } from "@/entities/session";
 import { ApiError, ValidationError } from "@/shared/lib/error";
 import { handleApiError } from "@/shared/api/handleApiError";
+import { setAuthCookies } from "./setAuthCookies";
+
+const loginRequestSchema = loginCredentialsSchema.extend({
+  rememberMe: z.boolean().optional().default(false),
+});
 
 export async function proxyLogin(request: NextRequest): Promise<NextResponse> {
   try {
-    const credentials = await request.json();
+    const body = await request.json();
 
-    const result = loginCredentialsSchema.safeParse(credentials);
+    const result = loginRequestSchema.safeParse(body);
     if (!result.success) {
       throw new ValidationError(result.error);
     }
 
-    const body = {
-      username: result.data.username,
-      password: result.data.password,
-      expiresInMins: DEFAULT_EXPIRES_IN_MINS,
-    };
+    const { rememberMe, ...credentials } = result.data;
 
     let response: Response;
     try {
@@ -25,7 +27,7 @@ export async function proxyLogin(request: NextRequest): Promise<NextResponse> {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(body),
+        body: JSON.stringify({ ...credentials, expiresInMins: DEFAULT_EXPIRES_IN_MINS }),
       });
     } catch {
       throw new ApiError(503, "Upstream service unavailable");
@@ -37,17 +39,10 @@ export async function proxyLogin(request: NextRequest): Promise<NextResponse> {
       throw new ApiError(response.status, "Login failed");
     }
 
-    const { refreshToken, ...clientData } = data;
+    const { accessToken, refreshToken, ...profile } = data;
 
-    const nextResponse = NextResponse.json(clientData);
-
-    nextResponse.cookies.set("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
-    });
+    const nextResponse = NextResponse.json(profile);
+    setAuthCookies(nextResponse, { accessToken, refreshToken }, rememberMe);
 
     return nextResponse;
   } catch (error) {
