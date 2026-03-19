@@ -1,4 +1,6 @@
 export { Button } from "./Button";
+export { Pagination, PaginationInfo } from "./Pagination";
+export { Rating } from "./Rating";
 export { Checkbox } from "./Checkbox";
 export { Input } from "./Input";
 export { LanguageSwitcher } from "./LanguageSwitcher";

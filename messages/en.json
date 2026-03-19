@@ -3,10 +3,14 @@
     "products": "Products",
     "searchPlaceholder": "Найти"
   },
+  "PaginationInfo": {
+    "showing": "Showing",
+    "of": "of"
+  },
   "ProductsTable": {
     "columns": {
       "name": "Name",
-      "vendor": "Vendor",
+      "brand": "Vendor",
       "sku": "SKU",
       "rating": "Rating",
       "price": "Price, ₽"
@@ -14,7 +18,8 @@
   },
   "common": {
     "loading": "Loading...",
-    "nothingFound": "Nothing found"
+    "nothingFound": "Nothing found",
+    "notSpecified": "Not specified"
   },
   "LoginForm": {
     "title": "Welcome!",

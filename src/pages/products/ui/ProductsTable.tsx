@@ -9,6 +9,7 @@ import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { usePathname, useRouter } from "@/shared/i18n/navigation";
 import { Table } from "@/shared/ui/Table";
 import type { SkeletonColumn } from "@/shared/ui/Table";
+import { Pagination, PaginationInfo, Rating } from "@/shared/ui";
 import { fetchProducts } from "@/features/products";
 import type { ProductListItem } from "@/entities/product";
 import styles from "./ProductsTable.module.css";
@@ -16,15 +17,48 @@ import Image from "next/image";
 
 const LIMIT = 20;
 
+const COLUMN_SIZES = {
+  checkbox: 44,
+  thumbnail: 68,
+  brand: 240,
+  sku: 190,
+  rating: 90,
+  price: 140,
+  actions: 96,
+} as const;
+
+const COLUMN_ALIGNS = {
+  rating: "center",
+  price: "right",
+} as const satisfies Partial<Record<string, SkeletonColumn["align"]>>;
+
 const SKELETON_COLUMNS: SkeletonColumn[] = [
-  { cellWidth: 44, barWidth: 18, barHeight: 18, barRadius: 4 }, // checkbox
-  { cellWidth: 52, barWidth: 36, barHeight: 36, barRadius: 6 }, // thumbnail
-  { barWidth: "55%" }, // title
-  { cellWidth: 120, barWidth: "60%" }, // brand
-  { cellWidth: 120, barWidth: "70%" }, // sku
-  { cellWidth: 90, barWidth: "50%" }, // rating
-  { cellWidth: 130, barWidth: "55%" }, // price
-  { cellWidth: 96, barWidth: 64 }, // actions
+  {
+    cellWidth: COLUMN_SIZES.checkbox,
+    barWidth: 18,
+    barHeight: 18,
+    barRadius: 4,
+  },
+  {
+    cellWidth: COLUMN_SIZES.thumbnail,
+    barWidth: 36,
+    barHeight: 36,
+    barRadius: 6,
+  },
+  { barWidth: "55%" },
+  { cellWidth: COLUMN_SIZES.brand, barWidth: "60%" },
+  { cellWidth: COLUMN_SIZES.sku, barWidth: "70%" },
+  {
+    cellWidth: COLUMN_SIZES.rating,
+    barWidth: "50%",
+    align: COLUMN_ALIGNS.rating,
+  },
+  {
+    cellWidth: COLUMN_SIZES.price,
+    barWidth: "55%",
+    align: COLUMN_ALIGNS.price,
+  },
+  { cellWidth: COLUMN_SIZES.actions, barWidth: 64 },
 ];
 
 const columnHelper = createColumnHelper<ProductListItem>();
@@ -40,6 +74,7 @@ export function ProductsTable() {
   const router = useRouter();
   const pathname = usePathname();
   const t = useTranslations("ProductsTable");
+  const tCommon = useTranslations("common");
 
   const columns = useMemo(
     () =>
@@ -47,7 +82,7 @@ export function ProductsTable() {
         columnHelper.accessor("thumbnail", {
           id: "thumbnail",
           header: "",
-          size: 52,
+          size: COLUMN_SIZES.thumbnail,
           enableSorting: false,
           cell: ({ getValue }) => (
             <Image
@@ -63,26 +98,31 @@ export function ProductsTable() {
           id: "title",
           header: t("columns.name"),
           enableSorting: true,
+          meta: { flex: true },
           cell: ({ getValue, row }) => (
             <div className={styles.titleCell}>
               <span className={styles.titleText}>{getValue()}</span>
-              <span className={styles.categoryText}>{row.original.category}</span>
+              <span className={styles.categoryText}>
+                {row.original.category}
+              </span>
             </div>
           ),
         }),
         columnHelper.accessor("brand", {
           id: "brand",
-          header: t("columns.vendor"),
-          size: 120,
+          header: t("columns.brand"),
+          size: COLUMN_SIZES.brand,
           enableSorting: false,
           cell: ({ getValue }) => (
-            <strong className={styles.brand}>{getValue() ?? "—"}</strong>
+            <span className={styles.brand}>
+              {getValue() ?? tCommon("notSpecified")}
+            </span>
           ),
         }),
         columnHelper.accessor("sku", {
           id: "sku",
           header: t("columns.sku"),
-          size: 120,
+          size: COLUMN_SIZES.sku,
           enableSorting: false,
           cell: ({ getValue }) => (
             <span className={styles.sku}>{getValue()}</span>
@@ -91,22 +131,17 @@ export function ProductsTable() {
         columnHelper.accessor("rating", {
           id: "rating",
           header: t("columns.rating"),
-          size: 90,
+          size: COLUMN_SIZES.rating,
           enableSorting: true,
-          cell: ({ getValue }) => {
-            const value = getValue();
-            return (
-              <span className={value < 4 ? styles.ratingLow : styles.rating}>
-                {value.toFixed(1)}/5
-              </span>
-            );
-          },
+          meta: { align: COLUMN_ALIGNS.rating },
+          cell: ({ getValue }) => <Rating value={getValue()} />,
         }),
         columnHelper.accessor("price", {
           id: "price",
           header: t("columns.price"),
-          size: 130,
+          size: COLUMN_SIZES.price,
           enableSorting: true,
+          meta: { align: COLUMN_ALIGNS.price },
           cell: ({ getValue }) => (
             <span className={styles.price}>{formatPrice(getValue())}</span>
           ),
@@ -114,7 +149,7 @@ export function ProductsTable() {
         columnHelper.display({
           id: "actions",
           header: "",
-          size: 96,
+          size: COLUMN_SIZES.actions,
           cell: () => (
             <div className={styles.actions}>
               <button
@@ -135,24 +170,26 @@ export function ProductsTable() {
           ),
         }),
       ] as Array<ColumnDef<ProductListItem, unknown>>,
-    [t],
+    [t, tCommon],
   );
 
-  const [sortBy, order, q, skip] = searchParams
+  const [sortBy, order, q, page] = searchParams
     ? [
         searchParams.get("sortBy") ?? undefined,
         searchParams.get("order") as "asc" | "desc",
         searchParams.get("q") ?? undefined,
-        Number(searchParams.get("skip")),
+        Math.max(1, Number(searchParams.get("page") ?? 1)),
       ]
     : [];
+
+  const skip = ((page ?? 1) - 1) * LIMIT;
 
   const sorting: SortingState = sortBy
     ? [{ id: sortBy, desc: order === "desc" }]
     : [];
 
   const { data, isFetching, isPending } = useQuery({
-    queryKey: ["products", { limit: LIMIT, skip, sortBy, order, q }],
+    queryKey: ["products", { page: page ?? 1, sortBy, order, q }],
     queryFn: () => fetchProducts({ limit: LIMIT, skip, sortBy, order, q }),
   });
 
@@ -174,18 +211,31 @@ export function ProductsTable() {
     [searchParams, router, pathname],
   );
 
+  const total = data?.total ?? 0;
+  const from = total === 0 ? 0 : skip + 1;
+  const to = Math.min(skip + LIMIT, total);
+
   return (
-    <div className={styles.container}>
-      <Table
-        data={data?.products ?? []}
-        columns={columns}
-        sorting={sorting}
-        onSortingChange={handleSortingChange}
-        getRowId={(row) => String(row.id)}
-        loading={isPending || isFetching}
-        skeleton={SKELETON_COLUMNS}
-        skeletonLimit={LIMIT}
-      />
-    </div>
+    <>
+      <div className={styles.container}>
+        <Table
+          data={data?.products ?? []}
+          columns={columns}
+          sorting={sorting}
+          onSortingChange={handleSortingChange}
+          getRowId={(row) => String(row.id)}
+          loading={isPending || isFetching}
+          skeleton={SKELETON_COLUMNS}
+          skeletonLimit={LIMIT}
+        />
+      </div>
+      <div
+        className={styles.footer}
+        style={isPending || isFetching ? { visibility: "hidden" } : undefined}
+      >
+        <PaginationInfo from={from} to={to} total={total} />
+        <Pagination total={total} limit={LIMIT} />
+      </div>
+    </>
   );
 }

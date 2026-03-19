@@ -2,6 +2,7 @@
 
 import {
   type ColumnDef,
+  type Column,
   type SortingState,
   type RowSelectionState,
   flexRender,
@@ -15,6 +16,28 @@ import { cn } from "@/shared/lib/cn";
 import type { SkeletonColumn } from "./TableSkeleton";
 import styles from "./Table.module.css";
 import skeletonStyles from "./TableSkeleton.module.css";
+
+const ALIGN_TO_JUSTIFY = {
+  left: "flex-start",
+  center: "center",
+  right: "flex-end",
+} as const;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getColumnStyle(column: Column<any, unknown>): React.CSSProperties {
+  const { meta } = column.columnDef;
+  return {
+    ...(!meta?.flex && { width: column.getSize() }),
+    ...(meta?.align && { textAlign: meta.align }),
+  };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getHeaderContentStyle(column: Column<any, unknown>): React.CSSProperties | undefined {
+  const align = column.columnDef.meta?.align;
+  if (!align) return undefined;
+  return { justifyContent: ALIGN_TO_JUSTIFY[align] };
+}
 
 function SortIcon({ sorted }: { sorted: false | "asc" | "desc" }) {
   return (
@@ -137,14 +160,10 @@ export function Table<TData>({
                     header.column.getCanSort() && styles.thSortable,
                     header.column.getIsSorted() && styles.thSorted,
                   )}
-                  style={
-                    header.column.getSize() !== 150
-                      ? { width: header.column.getSize() }
-                      : undefined
-                  }
+                  style={getColumnStyle(header.column)}
                   onClick={header.column.getToggleSortingHandler()}
                 >
-                  <span className={styles.thContent}>
+                  <span className={styles.thContent} style={getHeaderContentStyle(header.column)}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -161,64 +180,67 @@ export function Table<TData>({
           ))}
         </thead>
         <tbody>
-          {loading
-            ? Array.from({ length: skeletonLimit }).map((_, rowIdx) => (
-                <tr key={`sk-${rowIdx}`} className={styles.row}>
-                  {leafColumns.map((col, colIdx) => {
-                    const skCol = skeleton?.[colIdx];
-                    return (
-                      <td
-                        key={col.id}
-                        className={cn(
-                          styles.td,
-                          col.id === "__select__" && styles.selectCell,
-                        )}
-                      >
-                        <div
-                          className={skeletonStyles.bar}
-                          style={{
-                            width: skCol?.barWidth ?? "80%",
-                            height: skCol?.barHeight ?? 14,
-                            borderRadius: skCol?.barRadius ?? 4,
-                          }}
-                        />
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))
-            : table.getRowModel().rows.length === 0
-              ? (
-                <tr className={styles.row}>
-                  <td
-                    colSpan={leafColumns.length}
-                    className={cn(styles.td, styles.emptyCell)}
-                  >
-                    {t("nothingFound")}
-                  </td>
-                </tr>
-              )
-              : table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className={cn(
-                    styles.row,
-                    row.getIsSelected() && styles.rowSelected,
-                  )}
-                >
-                  {row.getVisibleCells().map((cell) => (
+          {loading ? (
+            Array.from({ length: skeletonLimit }).map((_, rowIdx) => (
+              <tr key={`sk-${rowIdx}`} className={styles.row}>
+                {leafColumns.map((col, colIdx) => {
+                  const skCol = skeleton?.[colIdx];
+                  return (
                     <td
-                      key={cell.id}
+                      key={col.id}
                       className={cn(
                         styles.td,
-                        cell.column.id === "__select__" && styles.selectCell,
+                        col.id === "__select__" && styles.selectCell,
                       )}
                     >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      <div
+                        className={skeletonStyles.bar}
+                        style={{
+                          width: skCol?.barWidth ?? "80%",
+                          height: skCol?.barHeight ?? 14,
+                          borderRadius: skCol?.barRadius ?? 4,
+                          marginLeft: skCol?.align === "right" || skCol?.align === "center" ? "auto" : undefined,
+                          marginRight: skCol?.align === "center" ? "auto" : undefined,
+                        }}
+                      />
                     </td>
-                  ))}
-                </tr>
-              ))}
+                  );
+                })}
+              </tr>
+            ))
+          ) : table.getRowModel().rows.length === 0 ? (
+            <tr className={styles.row}>
+              <td
+                colSpan={leafColumns.length}
+                className={cn(styles.td, styles.emptyCell)}
+              >
+                {t("nothingFound")}
+              </td>
+            </tr>
+          ) : (
+            table.getRowModel().rows.map((row) => (
+              <tr
+                key={row.id}
+                className={cn(
+                  styles.row,
+                  row.getIsSelected() && styles.rowSelected,
+                )}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <td
+                    key={cell.id}
+                    className={cn(
+                      styles.td,
+                      cell.column.id === "__select__" && styles.selectCell,
+                    )}
+                    style={getColumnStyle(cell.column)}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

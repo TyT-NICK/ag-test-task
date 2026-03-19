@@ -10,6 +10,8 @@ export interface SkeletonColumn {
   barHeight?: number;
   /** Bar border-radius in px (default 4) */
   barRadius?: number;
+  /** Horizontal alignment of the skeleton bar inside the cell */
+  align?: "left" | "center" | "right";
 }
 
 export interface TableSkeletonProps {
@@ -49,6 +51,8 @@ export function TableSkeleton({ columns, limit = 10 }: TableSkeletonProps) {
                       width: col.barWidth ?? "80%",
                       height: col.barHeight ?? 14,
                       borderRadius: col.barRadius ?? 4,
+                      marginLeft: col.align === "right" ? "auto" : col.align === "center" ? "auto" : undefined,
+                      marginRight: col.align === "center" ? "auto" : undefined,
                     }}
                   />
                 </td>

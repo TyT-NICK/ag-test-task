@@ -2,6 +2,7 @@
 
 import { Select as BaseSelect } from "@base-ui/react/select";
 import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/shared/i18n/navigation";
 import { routing } from "@/shared/i18n/routing";
 import styles from "./LanguageSwitcher.module.css";
@@ -23,10 +24,12 @@ export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   function handleChange(newLocale: string | null) {
     if (!newLocale) return;
-    router.replace(pathname, { locale: newLocale });
+    const query = searchParams?.toString();
+    router.replace(`${pathname}${query ? `?${query}` : ""}`, { locale: newLocale });
   }
 
   return (
