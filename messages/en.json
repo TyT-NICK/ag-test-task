@@ -3,8 +3,18 @@
     "products": "Products",
     "searchPlaceholder": "Найти"
   },
+  "ProductsTable": {
+    "columns": {
+      "name": "Name",
+      "vendor": "Vendor",
+      "sku": "SKU",
+      "rating": "Rating",
+      "price": "Price, ₽"
+    }
+  },
   "common": {
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "nothingFound": "Nothing found"
   },
   "LoginForm": {
     "title": "Welcome!",

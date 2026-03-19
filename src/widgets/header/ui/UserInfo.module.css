@@ -1,0 +1,42 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px 4px 4px;
+  border-radius: 20px;
+  border: 1px solid #ededed;
+  background-color: #ffffff;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatarImage {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatarFallback {
+  width: 18px;
+  height: 18px;
+  color: #9c9c9c;
+}
+
+.name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #232323;
+  white-space: nowrap;
+  padding-right: 4px;
+}

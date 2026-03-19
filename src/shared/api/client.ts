@@ -1,7 +1,8 @@
 import axios, { type InternalAxiosRequestConfig } from "axios";
+import { BASE_URL } from "../config/env";
 
 export const client = axios.create({
-  baseURL: "/api",
+  baseURL: BASE_URL + "/api",
   withCredentials: true, // send HttpOnly cookies on every request
 });
 

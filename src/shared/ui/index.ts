@@ -8,5 +8,7 @@ export { Popover } from "./Popover";
 export { SearchBar } from "./SearchBar";
 export { Select } from "./Select";
 export type { SelectOption } from "./Select";
+export { Table, TableSkeleton } from "./Table";
+export type { TableProps } from "./Table";
 export { Tooltip } from "./Tooltip";
 export * from "./icons";

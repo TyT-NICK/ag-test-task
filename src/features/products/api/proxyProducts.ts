@@ -6,7 +6,12 @@ import { ApiError, ValidationError } from "@/shared/lib/error";
 import { handleApiError } from "@/shared/api/handleApiError";
 
 const productsQuerySchema = z.object({
-  limit: z.coerce.number().int().min(1).max(100).default(DEFAULT_PRODUCTS_LIMIT),
+  limit: z.coerce
+    .number()
+    .int()
+    .min(1)
+    .max(100)
+    .default(DEFAULT_PRODUCTS_LIMIT),
   skip: z.coerce.number().int().min(0).default(0),
   sortBy: z
     .enum(["id", "title", "price", "rating", "stock", "discountPercentage"])
@@ -19,12 +24,6 @@ export async function proxyProducts(
   request: NextRequest,
 ): Promise<NextResponse> {
   try {
-    const accessToken = request.cookies.get("accessToken")?.value;
-
-    if (!accessToken) {
-      throw new ApiError(401, "Unauthorized");
-    }
-
     const { searchParams } = new URL(request.url);
     const result = productsQuerySchema.safeParse(
       Object.fromEntries(searchParams),
@@ -48,9 +47,7 @@ export async function proxyProducts(
 
     let response: Response;
     try {
-      response = await fetch(`${API_URL}${upstreamPath}`, {
-        headers: { authorization: `Bearer ${accessToken}` },
-      });
+      response = await fetch(`${API_URL}${upstreamPath}`);
     } catch {
       throw new ApiError(503, "Upstream service unavailable");
     }

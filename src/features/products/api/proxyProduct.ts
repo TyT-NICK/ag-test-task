@@ -14,12 +14,6 @@ export async function proxyProduct(
   params: Promise<{ id: string }>,
 ): Promise<NextResponse> {
   try {
-    const accessToken = request.cookies.get("accessToken")?.value;
-
-    if (!accessToken) {
-      throw new ApiError(401, "Unauthorized");
-    }
-
     const result = paramsSchema.safeParse(await params);
 
     if (!result.success) {
@@ -28,9 +22,7 @@ export async function proxyProduct(
 
     let response: Response;
     try {
-      response = await fetch(`${API_URL}/products/${result.data.id}`, {
-        headers: { authorization: `Bearer ${accessToken}` },
-      });
+      response = await fetch(`${API_URL}/products/${result.data.id}`);
     } catch {
       throw new ApiError(503, "Upstream service unavailable");
     }
