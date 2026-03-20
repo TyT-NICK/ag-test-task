@@ -1,0 +1,16 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+}
+
+.original {
+  color: var(--color-neutral-400);
+  text-decoration: line-through;
+  font-size: 11px;
+}
+
+.fraction {
+  color: var(--color-neutral-400);
+}

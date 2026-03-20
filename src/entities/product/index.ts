@@ -8,3 +8,4 @@ export { proxyAddProduct } from "./api/proxyAddProduct";
 export { proxyUpdateProduct } from "./api/proxyUpdateProduct";
 export { ProductForm } from "./ui/ProductForm";
 export { ProductModal } from "./ui/ProductModal";
+export { Price } from "./ui/Price";

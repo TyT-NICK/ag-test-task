@@ -37,6 +37,7 @@
     "fields": {
       "title": "Наименование",
       "price": "Цена",
+      "discountPercentage": "Скидка, %",
       "stock": "Остаток",
       "brand": "Бренд",
       "category": "Категория",

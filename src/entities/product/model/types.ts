@@ -6,6 +6,7 @@ export type ProductListItem = {
   sku: string;
   rating: number;
   price: number;
+  discountPercentage: number;
   thumbnail: string;
 };
 

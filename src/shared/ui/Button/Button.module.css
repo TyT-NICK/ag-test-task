@@ -31,7 +31,7 @@
 
 .primary {
   background: var(--variant-primary-bg);
-  border-color: var(--variant-primary-border);
+  /* border-color: var(--variant-primary-border); */
   color: var(--variant-primary-color);
   box-shadow: var(--variant-primary-shadow);
 

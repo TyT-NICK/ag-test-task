@@ -15,6 +15,10 @@ import styles from "./ProductForm.module.css";
 
 const productFormSchema = productBodySchema.extend({
   price: z.coerce.number().positive(),
+  discountPercentage: z.preprocess(
+    (v) => (v === "" ? undefined : v),
+    z.coerce.number().min(0).max(100).optional(),
+  ),
   stock: z.preprocess(
     (v) => (v === "" ? undefined : v),
     z.coerce.number().int().min(0).optional(),
@@ -54,6 +58,7 @@ export function ProductForm({ onClose, product }: ProductFormProps) {
                     rating: 0,
                     category: "",
                     thumbnail: "",
+                    discountPercentage: 0,
                     ...variables,
                   } satisfies ProductListItem,
                   ...old.products,
@@ -112,6 +117,7 @@ export function ProductForm({ onClose, product }: ProductFormProps) {
       ? {
           title: product.title,
           price: product.price,
+          discountPercentage: product.discountPercentage,
           brand: product.brand ?? "",
           category: product.category,
           description: product.description,
@@ -146,6 +152,12 @@ export function ProductForm({ onClose, product }: ProductFormProps) {
           type="number"
           error={errors.price?.message}
           {...register("price")}
+        />
+        <Input
+          label={t("fields.discountPercentage")}
+          type="number"
+          error={errors.discountPercentage?.message}
+          {...register("discountPercentage")}
         />
         <Input
           label={t("fields.stock")}

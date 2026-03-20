@@ -15,6 +15,7 @@ import { DotsHorizontalIcon, PlusIcon, RefreshIcon } from "@/shared/ui/icons";
 import {
   fetchProduct,
   fetchProducts,
+  Price,
   ProductForm,
   ProductModal,
 } from "@/entities/product";
@@ -70,11 +71,6 @@ const SKELETON_COLUMNS: SkeletonColumn[] = [
 
 const columnHelper = createColumnHelper<ProductListItem>();
 
-const formatPrice = (value: number) =>
-  new Intl.NumberFormat("ru-RU", {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(value);
 
 export function ProductsTable() {
   const searchParams = useSearchParams();
@@ -169,8 +165,8 @@ export function ProductsTable() {
           size: COLUMN_SIZES.price,
           enableSorting: true,
           meta: { align: COLUMN_ALIGNS.price },
-          cell: ({ getValue }) => (
-            <span className={styles.price}>{formatPrice(getValue())}</span>
+          cell: ({ row }) => (
+            <Price price={row.original.price} discountPercentage={row.original.discountPercentage} />
           ),
         }),
         columnHelper.display({

@@ -37,6 +37,7 @@
     "fields": {
       "title": "Title",
       "price": "Price",
+      "discountPercentage": "Discount, %",
       "stock": "Stock",
       "brand": "Brand",
       "category": "Category",

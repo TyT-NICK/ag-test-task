@@ -33,7 +33,7 @@
 
 .active {
   background: var(--variant-primary-bg);
-  border-color: var(--variant-primary-border);
+  border-color: transparent;
   color: var(--variant-primary-color);
   box-shadow: var(--variant-primary-shadow);
   font-weight: 500;
