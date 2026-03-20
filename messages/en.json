@@ -52,6 +52,17 @@
     "editSuccess": "Product updated",
     "editError": "Failed to update product"
   },
+  "validation": {
+    "required": "This field is required",
+    "tooLong": "Value is too long",
+    "tooShort": "Value is too short",
+    "noSpaces": "Must not contain spaces",
+    "invalidNumber": "Must be a valid number",
+    "positive": "Must be a positive number",
+    "integer": "Must be a whole number",
+    "minValue": "Value is too small",
+    "maxValue": "Value is too large"
+  },
   "common": {
     "loading": "Loading...",
     "nothingFound": "Nothing found",

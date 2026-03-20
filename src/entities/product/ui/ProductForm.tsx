@@ -14,15 +14,17 @@ import { Button, Input } from "@/shared/ui";
 import styles from "./ProductForm.module.css";
 
 const productFormSchema = productBodySchema.extend({
-  price: z.coerce.number().positive(),
-  discountPercentage: z.preprocess(
-    (v) => (v === "" ? undefined : v),
-    z.coerce.number().min(0).max(100).optional(),
-  ),
-  stock: z.preprocess(
-    (v) => (v === "" ? undefined : v),
-    z.coerce.number().int().min(0).optional(),
-  ),
+  price: z.coerce.number({ error: "invalidNumber" }).positive("positive"),
+  discountPercentage: z.coerce
+    .number({ error: "invalidNumber" })
+    .min(0, "minValue")
+    .max(100, "maxValue")
+    .optional(),
+  stock: z.coerce
+    .number({ error: "invalidNumber" })
+    .int("integer")
+    .min(0, "minValue")
+    .optional(),
 });
 
 type ProductFormValues = z.output<typeof productFormSchema>;
@@ -36,6 +38,7 @@ const PRODUCTS_FILTER = { queryKey: ["products"] };
 
 export function ProductForm({ onClose, product }: ProductFormProps) {
   const t = useTranslations("ProductForm");
+  const tV = useTranslations("validation");
   const isEditing = product !== undefined;
 
   const { mutate: add, isPending: isAdding } = useOptimisticMutation({
@@ -143,47 +146,71 @@ export function ProductForm({ onClose, product }: ProductFormProps) {
       <div className={styles.fields}>
         <Input
           label={t("fields.title")}
-          error={errors.title?.message}
+          error={
+            errors.title?.message &&
+            tV(errors.title.message as Parameters<typeof tV>[0])
+          }
           className={styles.fullWidth}
           {...register("title")}
         />
         <Input
           label={t("fields.price")}
-          type="number"
-          error={errors.price?.message}
+          type="text"
+          error={
+            errors.price?.message &&
+            tV(errors.price.message as Parameters<typeof tV>[0])
+          }
           {...register("price")}
         />
         <Input
           label={t("fields.discountPercentage")}
-          type="number"
-          error={errors.discountPercentage?.message}
+          type="text"
+          error={
+            errors.discountPercentage?.message &&
+            tV(errors.discountPercentage.message as Parameters<typeof tV>[0])
+          }
           {...register("discountPercentage")}
         />
         <Input
           label={t("fields.stock")}
-          type="number"
-          error={errors.stock?.message}
+          type="text"
+          error={
+            errors.stock?.message &&
+            tV(errors.stock.message as Parameters<typeof tV>[0])
+          }
           {...register("stock")}
         />
         <Input
           label={t("fields.brand")}
-          error={errors.brand?.message}
+          error={
+            errors.brand?.message &&
+            tV(errors.brand.message as Parameters<typeof tV>[0])
+          }
           {...register("brand")}
         />
         <Input
           label={t("fields.category")}
-          error={errors.category?.message}
+          error={
+            errors.category?.message &&
+            tV(errors.category.message as Parameters<typeof tV>[0])
+          }
           {...register("category")}
         />
         <Input
           label={t("fields.description")}
-          error={errors.description?.message}
+          error={
+            errors.description?.message &&
+            tV(errors.description.message as Parameters<typeof tV>[0])
+          }
           className={styles.fullWidth}
           {...register("description")}
         />
         <Input
           label={t("fields.thumbnail")}
-          error={errors.thumbnail?.message}
+          error={
+            errors.thumbnail?.message &&
+            tV(errors.thumbnail.message as Parameters<typeof tV>[0])
+          }
           className={styles.fullWidth}
           {...register("thumbnail")}
         />

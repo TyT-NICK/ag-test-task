@@ -33,6 +33,7 @@ type LoginFormValues = z.output<typeof loginFormSchema>;
 
 export function LoginForm() {
   const t = useTranslations("LoginForm");
+  const tV = useTranslations("validation");
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -87,13 +88,19 @@ export function LoginForm() {
           <Input
             label={t("username")}
             icon={<UserIcon />}
-            error={errors.username?.message}
+            error={
+              errors.username?.message &&
+              tV(errors.username.message as Parameters<typeof tV>[0])
+            }
             {...register("username")}
           />
           <Input
             label={t("password")}
             type="password"
-            error={errors.password?.message}
+            error={
+              errors.password?.message &&
+              tV(errors.password.message as Parameters<typeof tV>[0])
+            }
             {...register("password")}
           />
         </div>

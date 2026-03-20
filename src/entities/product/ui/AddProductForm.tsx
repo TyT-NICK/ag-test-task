@@ -1,5 +1,3 @@
-"use client";
-
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
@@ -11,11 +9,12 @@ import { Button, Input } from "@/shared/ui";
 import styles from "./AddProductForm.module.css";
 
 const productFormSchema = productBodySchema.extend({
-  price: z.coerce.number().positive(),
-  stock: z.preprocess(
-    (v) => (v === "" ? undefined : v),
-    z.coerce.number().int().min(0).optional(),
-  ),
+  price: z.coerce.number({ error: "invalidNumber" }).positive("positive"),
+  stock: z.coerce
+    .number({ error: "invalidNumber" })
+    .int("integer")
+    .min(0, "minValue")
+    .optional(),
 });
 
 type ProductFormValues = z.output<typeof productFormSchema>;
@@ -26,6 +25,7 @@ type AddProductFormProps = {
 
 export function AddProductForm({ onClose }: AddProductFormProps) {
   const t = useTranslations("AddProductForm");
+  const tV = useTranslations("validation");
   const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation({
@@ -56,41 +56,62 @@ export function AddProductForm({ onClose }: AddProductFormProps) {
       <div className={styles.fields}>
         <Input
           label={t("fields.title")}
-          error={errors.title?.message}
+          error={
+            errors.title?.message &&
+            tV(errors.title.message as Parameters<typeof tV>[0])
+          }
           className={styles.fullWidth}
           {...register("title")}
         />
         <Input
           label={t("fields.price")}
-          type="number"
-          error={errors.price?.message}
+          type="text"
+          error={
+            errors.price?.message &&
+            tV(errors.price.message as Parameters<typeof tV>[0])
+          }
           {...register("price")}
         />
         <Input
           label={t("fields.stock")}
-          type="number"
-          error={errors.stock?.message}
+          type="text"
+          error={
+            errors.stock?.message &&
+            tV(errors.stock.message as Parameters<typeof tV>[0])
+          }
           {...register("stock")}
         />
         <Input
           label={t("fields.brand")}
-          error={errors.brand?.message}
+          error={
+            errors.brand?.message &&
+            tV(errors.brand.message as Parameters<typeof tV>[0])
+          }
           {...register("brand")}
         />
         <Input
           label={t("fields.category")}
-          error={errors.category?.message}
+          error={
+            errors.category?.message &&
+            tV(errors.category.message as Parameters<typeof tV>[0])
+          }
           {...register("category")}
         />
         <Input
           label={t("fields.description")}
-          error={errors.description?.message}
+          error={
+            errors.description?.message &&
+            tV(errors.description.message as Parameters<typeof tV>[0])
+          }
           className={styles.fullWidth}
           {...register("description")}
         />
         <Input
           label={t("fields.thumbnail")}
-          error={errors.thumbnail?.message}
+          error={
+            errors.thumbnail?.message &&
+            tV(errors.thumbnail.message as Parameters<typeof tV>[0])
+          }
           className={styles.fullWidth}
           {...register("thumbnail")}
         />
