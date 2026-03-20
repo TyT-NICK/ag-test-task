@@ -10,8 +10,7 @@
   --variant-primary-border: var(--color-focus);
   --variant-primary-color: var(--color-white);
   --variant-primary-shadow:
-    0 8px 8px var(--color-shadow-focus),
-    inset 0 -2px 0 var(--color-shadow-md);
+    0 8px 8px var(--color-shadow-focus), inset 0 -2px 0 var(--color-shadow-md);
 
   /* ── Secondary variant ────────────────────────────────────── */
   --variant-secondary-bg: var(--color-white);

@@ -5,7 +5,9 @@ import { ApiError } from "@/shared/lib/error";
 import { handleApiError } from "@/shared/api/handleApiError";
 import { setAuthCookies } from "./setAuthCookies";
 
-export async function proxyRefresh(request: NextRequest): Promise<NextResponse> {
+export async function proxyRefresh(
+  request: NextRequest,
+): Promise<NextResponse> {
   try {
     const refreshTokenCookie = request.cookies.get("refreshToken");
 
@@ -36,7 +38,11 @@ export async function proxyRefresh(request: NextRequest): Promise<NextResponse> 
     const { accessToken, refreshToken: newRefreshToken, ...profile } = data;
 
     const nextResponse = NextResponse.json(profile);
-    setAuthCookies(nextResponse, { accessToken, refreshToken: newRefreshToken }, persist);
+    setAuthCookies(
+      nextResponse,
+      { accessToken, refreshToken: newRefreshToken },
+      persist,
+    );
 
     return nextResponse;
   } catch (error) {

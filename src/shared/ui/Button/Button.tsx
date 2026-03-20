@@ -11,7 +11,12 @@ type ButtonProps = Omit<ComponentProps<typeof BaseButton>, "className"> & {
   className?: string;
 };
 
-export function Button({ variant = "primary", rounded, className, ...props }: ButtonProps) {
+export function Button({
+  variant = "primary",
+  rounded,
+  className,
+  ...props
+}: ButtonProps) {
   return (
     <BaseButton
       className={cn(

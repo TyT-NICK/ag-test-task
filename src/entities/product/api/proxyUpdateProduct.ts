@@ -36,14 +36,11 @@ export async function proxyUpdateProduct(
 
     let response: Response;
     try {
-      response = await fetch(
-        `${API_URL}/products/${paramsResult.data.id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(bodyResult.data),
-        },
-      );
+      response = await fetch(`${API_URL}/products/${paramsResult.data.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bodyResult.data),
+      });
     } catch {
       throw new ApiError(503, "Upstream service unavailable");
     }

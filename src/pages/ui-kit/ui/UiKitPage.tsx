@@ -1,9 +1,26 @@
 "use client";
 
-import { Button, Checkbox, Input, LanguageSwitcher, Logo, Paper, Popover, Select, Tooltip, UserIcon } from "@/shared/ui";
+import {
+  Button,
+  Checkbox,
+  Input,
+  LanguageSwitcher,
+  Logo,
+  Paper,
+  Popover,
+  Select,
+  Tooltip,
+  UserIcon,
+} from "@/shared/ui";
 import styles from "./UiKitPage.module.css";
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <section className={styles.section}>
       <h2 className={styles.sectionTitle}>{title}</h2>
@@ -12,7 +29,13 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-function Row({ label, children }: { label: string; children: React.ReactNode }) {
+function Row({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className={styles.row}>
       <span className={styles.rowLabel}>{label}</span>
@@ -29,18 +52,32 @@ export function UiKitPage() {
       <Section title="Paper">
         <Paper className={styles.paperDemo}>
           <Logo size="md" />
-          <Input label="Логин" placeholder="Введите логин" icon={<UserIcon />} />
+          <Input
+            label="Логин"
+            placeholder="Введите логин"
+            icon={<UserIcon />}
+          />
           <Input label="Пароль" type="password" placeholder="Введите пароль" />
           <Button variant="primary">Войти</Button>
         </Paper>
       </Section>
 
       <Section title="Logo">
-        <Row label="xs"><Logo size="xs" /></Row>
-        <Row label="sm"><Logo size="sm" /></Row>
-        <Row label="md"><Logo size="md" /></Row>
-        <Row label="lg"><Logo size="lg" /></Row>
-        <Row label="xl"><Logo size="xl" /></Row>
+        <Row label="xs">
+          <Logo size="xs" />
+        </Row>
+        <Row label="sm">
+          <Logo size="sm" />
+        </Row>
+        <Row label="md">
+          <Logo size="md" />
+        </Row>
+        <Row label="lg">
+          <Logo size="lg" />
+        </Row>
+        <Row label="xl">
+          <Logo size="xl" />
+        </Row>
       </Section>
 
       <Section title="Button">
@@ -72,7 +109,11 @@ export function UiKitPage() {
           <Input label="Логин" placeholder="Введите логин" />
         </Row>
         <Row label="With icon">
-          <Input label="Логин" placeholder="Введите логин" icon={<UserIcon />} />
+          <Input
+            label="Логин"
+            placeholder="Введите логин"
+            icon={<UserIcon />}
+          />
         </Row>
         <Row label="Password">
           <Input label="Пароль" type="password" placeholder="Введите пароль" />
@@ -175,7 +216,10 @@ export function UiKitPage() {
           <Checkbox label="Выбрать всё" indeterminate />
         </Row>
         <Row label="Error">
-          <Checkbox label="Принять условия" error="Необходимо принять условия" />
+          <Checkbox
+            label="Принять условия"
+            error="Необходимо принять условия"
+          />
         </Row>
         <Row label="Disabled">
           <Checkbox label="Недоступно" disabled />

@@ -19,12 +19,22 @@ function DashIcon() {
   );
 }
 
-type CheckboxProps = Omit<ComponentProps<typeof BaseCheckbox.Root>, "className"> & {
+type CheckboxProps = Omit<
+  ComponentProps<typeof BaseCheckbox.Root>,
+  "className"
+> & {
   label?: string;
   error?: string;
 };
 
-export function Checkbox({ label, error, id, indeterminate, disabled, ...props }: CheckboxProps) {
+export function Checkbox({
+  label,
+  error,
+  id,
+  indeterminate,
+  disabled,
+  ...props
+}: CheckboxProps) {
   return (
     <div className={styles.root}>
       <label className={cn(styles.label, disabled && styles.labelDisabled)}>

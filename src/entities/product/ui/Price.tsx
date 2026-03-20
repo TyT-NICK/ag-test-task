@@ -13,8 +13,14 @@ const fmt = new Intl.NumberFormat("ru-RU", {
 function splitPrice(value: number): [string, string] {
   const parts = fmt.formatToParts(value);
   const decimalIndex = parts.findIndex((p) => p.type === "decimal");
-  const whole = parts.slice(0, decimalIndex).map((p) => p.value).join("");
-  const fraction = parts.slice(decimalIndex).map((p) => p.value).join("");
+  const whole = parts
+    .slice(0, decimalIndex)
+    .map((p) => p.value)
+    .join("");
+  const fraction = parts
+    .slice(decimalIndex)
+    .map((p) => p.value)
+    .join("");
   return [whole, fraction];
 }
 

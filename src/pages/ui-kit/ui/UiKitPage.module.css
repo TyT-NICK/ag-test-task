@@ -21,7 +21,8 @@
   color: var(--foreground);
   margin: 0 0 20px;
   padding-bottom: 10px;
-  border-bottom: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--foreground) 12%, transparent);
 }
 
 .sectionContent {

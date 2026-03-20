@@ -22,7 +22,9 @@ export function LanguageSwitcher() {
   function handleChange(newLocale: string | null) {
     if (!newLocale) return;
     const query = searchParams?.toString();
-    router.replace(`${pathname}${query ? `?${query}` : ""}`, { locale: newLocale });
+    router.replace(`${pathname}${query ? `?${query}` : ""}`, {
+      locale: newLocale,
+    });
   }
 
   return (
@@ -34,7 +36,11 @@ export function LanguageSwitcher() {
         </BaseSelect.Icon>
       </BaseSelect.Trigger>
       <BaseSelect.Portal>
-        <BaseSelect.Positioner sideOffset={4} align="end" className={styles.positioner}>
+        <BaseSelect.Positioner
+          sideOffset={4}
+          align="end"
+          className={styles.positioner}
+        >
           <BaseSelect.Popup className={styles.popup}>
             <BaseSelect.List className={styles.list}>
               {routing.locales.map((loc) => (

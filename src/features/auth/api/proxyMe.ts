@@ -25,7 +25,8 @@ export async function proxyMe(request: NextRequest): Promise<NextResponse> {
       throw new ApiError(response.status, "Failed to fetch user");
     }
 
-    const data: Omit<SessionUser, "accessToken" | "refreshToken"> = await response.json();
+    const data: Omit<SessionUser, "accessToken" | "refreshToken"> =
+      await response.json();
 
     return NextResponse.json(data);
   } catch (error) {

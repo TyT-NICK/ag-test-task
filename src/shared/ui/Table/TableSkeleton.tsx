@@ -41,9 +41,7 @@ export function TableSkeleton({ columns, limit = 10 }: TableSkeletonProps) {
                 <td
                   key={col_i}
                   className={tableStyles.td}
-                  style={
-                    col.cellWidth ? { width: col.cellWidth } : undefined
-                  }
+                  style={col.cellWidth ? { width: col.cellWidth } : undefined}
                 >
                   <div
                     className={styles.bar}
@@ -51,7 +49,12 @@ export function TableSkeleton({ columns, limit = 10 }: TableSkeletonProps) {
                       width: col.barWidth ?? "80%",
                       height: col.barHeight ?? 14,
                       borderRadius: col.barRadius ?? 4,
-                      marginLeft: col.align === "right" ? "auto" : col.align === "center" ? "auto" : undefined,
+                      marginLeft:
+                        col.align === "right"
+                          ? "auto"
+                          : col.align === "center"
+                            ? "auto"
+                            : undefined,
                       marginRight: col.align === "center" ? "auto" : undefined,
                     }}
                   />

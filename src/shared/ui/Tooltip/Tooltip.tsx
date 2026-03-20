@@ -13,7 +13,11 @@ type TooltipProps = {
 export function Tooltip({ content, children, delay = 300 }: TooltipProps) {
   return (
     <BaseTooltip.Root>
-      <BaseTooltip.Trigger render={<span />} className={styles.trigger} delay={delay}>
+      <BaseTooltip.Trigger
+        render={<span />}
+        className={styles.trigger}
+        delay={delay}
+      >
         {children}
       </BaseTooltip.Trigger>
       <BaseTooltip.Portal>

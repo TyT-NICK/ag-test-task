@@ -28,7 +28,10 @@ export async function proxyLogin(request: NextRequest): Promise<NextResponse> {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ ...credentials, expiresInMins: DEFAULT_EXPIRES_IN_MINS }),
+        body: JSON.stringify({
+          ...credentials,
+          expiresInMins: DEFAULT_EXPIRES_IN_MINS,
+        }),
       });
     } catch {
       throw new ApiError(503, "Upstream service unavailable");
