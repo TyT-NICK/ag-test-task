@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/shared/i18n/routing";
-import { ClientProviders } from "../_providers/ClientProviders";
+import { ClientProviders } from "../../src/app/providers/ClientProviders";
 import "../globals.css";
 
 const inter = Inter({

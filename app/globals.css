@@ -1,5 +1,5 @@
-@import "../shared/styles/colors.css";
-@import "../shared/styles/variants.css";
+@import "@/shared/styles/colors.css";
+@import "@/shared/styles/variants.css";
 
 *,
 *::before,

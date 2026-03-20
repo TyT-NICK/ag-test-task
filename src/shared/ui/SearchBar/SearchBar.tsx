@@ -24,11 +24,11 @@ export function SearchBar({
   const router = useRouter();
   const pathname = usePathname();
 
-  const [value, setValue] = useState(searchParams.get(paramName) ?? "");
+  const [value, setValue] = useState(searchParams?.get(paramName) ?? "");
 
   const pushParam = useDebouncedCallback(
     (newValue: string) => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(searchParams?.toString());
       if (newValue) {
         params.set(paramName, newValue);
       } else {
