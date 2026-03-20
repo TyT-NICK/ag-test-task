@@ -121,6 +121,7 @@ export function Table<TData>({
           checked={row.getIsSelected()}
           disabled={!row.getCanSelect()}
           onCheckedChange={() => row.toggleSelected()}
+          onClick={(e) => e.stopPropagation()}
         />
       ),
     }),
@@ -257,6 +258,11 @@ export function Table<TData>({
                       cell.column.id === "__select__" && styles.selectCell,
                     )}
                     style={getColumnStyle(cell.column)}
+                    onClick={
+                      cell.column.id === "__select__"
+                        ? (e) => e.stopPropagation()
+                        : undefined
+                    }
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
