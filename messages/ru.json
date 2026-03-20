@@ -8,6 +8,10 @@
     "of": "из"
   },
   "ProductsTable": {
+    "title": "Все товары",
+    "addProduct": "Добавить",
+    "editProduct": "Редактировать товар",
+    "refresh": "Обновить",
     "columns": {
       "name": "Наименование",
       "brand": "Вендор",
@@ -15,6 +19,37 @@
       "rating": "Оценка",
       "price": "Цена, Р"
     }
+  },
+  "ProductModal": {
+    "price": "Цена",
+    "discount": "Скидка",
+    "stock": "Остаток",
+    "sku": "Артикул",
+    "status": "Статус",
+    "weight": "Вес",
+    "warranty": "Гарантия",
+    "shipping": "Доставка",
+    "returnPolicy": "Возврат"
+  },
+  "ProductForm": {
+    "addTitle": "Добавить товар",
+    "editTitle": "Редактировать товар",
+    "fields": {
+      "title": "Наименование",
+      "price": "Цена",
+      "stock": "Остаток",
+      "brand": "Бренд",
+      "category": "Категория",
+      "description": "Описание",
+      "thumbnail": "Ссылка на изображение"
+    },
+    "addSubmit": "Добавить",
+    "editSubmit": "Сохранить",
+    "cancel": "Отмена",
+    "addSuccess": "Товар добавлен",
+    "addError": "Не удалось добавить товар",
+    "editSuccess": "Товар обновлён",
+    "editError": "Не удалось обновить товар"
   },
   "common": {
     "loading": "Загрузка...",

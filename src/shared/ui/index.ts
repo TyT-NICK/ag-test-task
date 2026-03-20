@@ -5,6 +5,7 @@ export { Checkbox } from "./Checkbox";
 export { Input } from "./Input";
 export { LanguageSwitcher } from "./LanguageSwitcher";
 export { Logo } from "./Logo";
+export { Modal } from "./Modal";
 export { Paper } from "./Paper";
 export { Popover } from "./Popover";
 export { SearchBar } from "./SearchBar";

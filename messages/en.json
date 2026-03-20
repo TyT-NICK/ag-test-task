@@ -8,6 +8,10 @@
     "of": "of"
   },
   "ProductsTable": {
+    "title": "All Products",
+    "addProduct": "Add",
+    "editProduct": "Edit product",
+    "refresh": "Refresh",
     "columns": {
       "name": "Name",
       "brand": "Vendor",
@@ -15,6 +19,37 @@
       "rating": "Rating",
       "price": "Price, ₽"
     }
+  },
+  "ProductModal": {
+    "price": "Price",
+    "discount": "Discount",
+    "stock": "Stock",
+    "sku": "SKU",
+    "status": "Status",
+    "weight": "Weight",
+    "warranty": "Warranty",
+    "shipping": "Shipping",
+    "returnPolicy": "Return policy"
+  },
+  "ProductForm": {
+    "addTitle": "Add Product",
+    "editTitle": "Edit Product",
+    "fields": {
+      "title": "Title",
+      "price": "Price",
+      "stock": "Stock",
+      "brand": "Brand",
+      "category": "Category",
+      "description": "Description",
+      "thumbnail": "Thumbnail URL"
+    },
+    "addSubmit": "Add",
+    "editSubmit": "Save",
+    "cancel": "Cancel",
+    "addSuccess": "Product added",
+    "addError": "Failed to add product",
+    "editSuccess": "Product updated",
+    "editError": "Failed to update product"
   },
   "common": {
     "loading": "Loading...",

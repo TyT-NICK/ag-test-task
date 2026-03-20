@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { API_URL, DEFAULT_PRODUCTS_LIMIT } from "@/shared/config/env";
-import type { ProductsResponse } from "@/entities/product";
+import type { ProductsResponse } from "../model/types";
 import { ApiError, ValidationError } from "@/shared/lib/error";
 import { handleApiError } from "@/shared/api/handleApiError";
 

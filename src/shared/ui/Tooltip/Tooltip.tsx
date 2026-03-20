@@ -7,16 +7,17 @@ import styles from "./Tooltip.module.css";
 type TooltipProps = {
   content: ReactNode;
   children: ReactNode;
+  delay?: number;
 };
 
-export function Tooltip({ content, children }: TooltipProps) {
+export function Tooltip({ content, children, delay = 300 }: TooltipProps) {
   return (
     <BaseTooltip.Root>
-      <BaseTooltip.Trigger render={<span />} className={styles.trigger}>
+      <BaseTooltip.Trigger render={<span />} className={styles.trigger} delay={delay}>
         {children}
       </BaseTooltip.Trigger>
       <BaseTooltip.Portal>
-        <BaseTooltip.Positioner sideOffset={8}>
+        <BaseTooltip.Positioner sideOffset={8} className={styles.positioner}>
           <BaseTooltip.Popup className={styles.popup}>
             <BaseTooltip.Arrow className={styles.arrow} />
             {content}

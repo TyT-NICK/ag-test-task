@@ -1,0 +1,54 @@
+:root {
+  /* ── Neutrals ─────────────────────────────────────────────── */
+  --color-white: #ffffff;
+  --color-neutral-50: #f9f9f9;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-150: #f0f0f0;
+  --color-neutral-200: #ededed;
+  --color-neutral-250: #ececeb;
+  --color-neutral-300: #e4e4e4;
+  --color-neutral-400: #c9c9c9;
+  --color-neutral-500: #b2b3b9;
+  --color-neutral-550: #a0a0a0;
+  --color-neutral-600: #9c9c9c;
+  --color-neutral-650: #969b9f;
+  --color-neutral-700: #515161;
+  --color-neutral-800: #333333;
+  --color-neutral-900: #232323;
+  --color-neutral-950: #171717;
+
+  /* ── Primary ──────────────────────────────────────────────── */
+  --color-primary: #242edb;
+  --color-primary-subtle: #f0f2ff;
+  --color-primary-subtle-hover: #e8ebff;
+  --color-primary-bg: rgba(36, 46, 219, 0.06);
+
+  /* ── Accent ───────────────────────────────────────────────── */
+  --color-accent: #797fea;
+  --color-accent-light: #a5b4fc;
+  --color-accent-light-hover: #c7d2fe;
+
+  /* ── Semantic ─────────────────────────────────────────────── */
+  --color-focus: #367aff;
+  --color-error: #ef4444;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+
+  /* ── Rating ───────────────────────────────────────────────── */
+  --color-star-empty: #e5e7eb;
+  --color-star-high: var(--color-success);
+  --color-star-medium: var(--color-warning);
+  --color-star-low: var(--color-error);
+
+  /* ── Overlays & Shadows ───────────────────────────────────── */
+  --color-backdrop: rgba(0, 0, 0, 0.4);
+  --color-shadow-xs: rgba(0, 0, 0, 0.03);
+  --color-shadow-sm: rgba(0, 0, 0, 0.04);
+  --color-shadow-md: rgba(0, 0, 0, 0.08);
+  --color-shadow-lg: rgba(0, 0, 0, 0.12);
+  --color-shadow-xl: rgba(0, 0, 0, 0.16);
+  --color-shadow-2xl: rgba(0, 0, 0, 0.18);
+  --color-shadow-focus: rgba(54, 122, 255, 0.03);
+  --color-shadow-focus-active: rgba(54, 122, 255, 0.02);
+  --color-shadow-accent: rgba(121, 127, 234, 0.3);
+}

@@ -6,37 +6,37 @@
 }
 
 .page {
+  background: var(--variant-secondary-bg);
+  border: 1px var(--variant-secondary-border) solid;
+  border-color:;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 30px;
   height: 30px;
   border-radius: 4px;
-  border: 1px solid #ececeb;
-  background: transparent;
-  color: #b2b3b9;
   font-size: 0.875rem;
   font-weight: 400;
   font-family: inherit;
   cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 
   @media (hover: hover) {
     &:hover:not(.active) {
-      border-color: #797fea;
-      color: #797fea;
+      background: var(--color-neutral-100);
     }
   }
 }
 
 .active {
-  background: #797fea;
-  border-color: #797fea;
-  color: #ffffff;
+  background: var(--variant-primary-bg);
+  border-color: var(--variant-primary-border);
+  color: var(--variant-primary-color);
+  box-shadow: var(--variant-primary-shadow);
   font-weight: 500;
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.12),
-    0 4px 12px rgba(121, 127, 234, 0.3);
   cursor: default;
 }
 
@@ -49,13 +49,13 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #b2b3b9;
+  color: var(--color-neutral-500);
   padding: 0;
   transition: color 0.15s ease;
 
   @media (hover: hover) {
     &:hover:not(:disabled) {
-      color: #797fea;
+      color: var(--color-primary);
     }
   }
 }
@@ -71,7 +71,7 @@
   justify-content: center;
   width: 30px;
   height: 30px;
-  color: #b2b3b9;
+  color: var(--color-neutral-500);
   font-size: 0.875rem;
   user-select: none;
 }

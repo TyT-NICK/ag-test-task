@@ -1,2 +1,11 @@
+export { CheckIcon } from "./CheckIcon";
+export { DotsHorizontalIcon } from "./DotsHorizontalIcon";
+export { ChevronDownIcon } from "./ChevronDownIcon";
+export { ChevronLeftIcon } from "./ChevronLeftIcon";
+export { ChevronRightIcon } from "./ChevronRightIcon";
+export { EyeIcon } from "./EyeIcon";
+export { EyeOffIcon } from "./EyeOffIcon";
+export { PlusIcon } from "./PlusIcon";
+export { RefreshIcon } from "./RefreshIcon";
 export { SearchIcon } from "./SearchIcon";
 export { UserIcon } from "./UserIcon";

@@ -9,7 +9,7 @@ import { isAxiosError } from "axios";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import { loginApi } from "../api/loginApi";
-import { loginCredentialsSchema } from "@/entities/session";
+import { loginCredentialsSchema } from "../model/schema";
 import useZodForm from "@/shared/lib/hooks/useZodForm";
 import {
   Button,

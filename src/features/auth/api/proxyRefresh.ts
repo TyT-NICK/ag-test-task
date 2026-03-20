@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { API_URL } from "@/shared/config/env";
-import { SessionUser } from "@/entities/session";
+import type { SessionUser } from "../model/types";
 import { ApiError } from "@/shared/lib/error";
 import { handleApiError } from "@/shared/api/handleApiError";
 import { setAuthCookies } from "./setAuthCookies";

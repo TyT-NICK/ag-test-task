@@ -1,8 +1,8 @@
 .paper {
   position: relative;
-  background: #ffffff;
+  background: var(--color-white);
   border-radius: 40px;
-  box-shadow: 0 24px 32px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 24px 32px var(--color-shadow-sm);
 }
 
 /* Gradient border — visible at top, fades to transparent */

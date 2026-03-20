@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 54px;
+  gap: 8px;
+  height: 48px;
   padding: 0 32px;
   border-radius: 12px;
   border: 0.5px solid transparent;
@@ -13,10 +14,12 @@
   cursor: pointer;
   user-select: none;
   outline: none;
-  transition: opacity 0.15s ease, filter 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    filter 0.15s ease;
 
   &:focus-visible {
-    outline: 2px solid #367aff;
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
   }
 
@@ -27,14 +30,10 @@
 }
 
 .primary {
-  background:
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0)),
-    #242edb;
-  border-color: #367aff;
-  color: #ffffff;
-  box-shadow:
-    0 8px 8px rgba(54, 122, 255, 0.03),
-    inset 0 -2px 0 rgba(0, 0, 0, 0.08);
+  background: var(--variant-primary-bg);
+  border-color: var(--variant-primary-border);
+  color: var(--variant-primary-color);
+  box-shadow: var(--variant-primary-shadow);
 
   @media (hover: hover) {
     &:hover:not([data-disabled]) {
@@ -45,25 +44,31 @@
   &:active:not([data-disabled]) {
     filter: brightness(0.94);
     box-shadow:
-      0 4px 4px rgba(54, 122, 255, 0.02),
-      inset 0 2px 4px rgba(0, 0, 0, 0.12);
+      0 4px 4px var(--color-shadow-focus-active),
+      inset 0 2px 4px var(--color-shadow-lg);
   }
 }
 
+.rounded {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
 .secondary {
-  background: transparent;
-  border-color: #367aff;
-  color: #242edb;
-  box-shadow: 0 8px 8px rgba(54, 122, 255, 0.03);
+  background: var(--variant-secondary-bg);
+  border-color: var(--variant-secondary-border);
+  color: var(--variant-secondary-color);
 
   @media (hover: hover) {
     &:hover:not([data-disabled]) {
-      background: rgba(36, 46, 219, 0.06);
+      background: var(--color-neutral-100);
     }
   }
 
   &:active:not([data-disabled]) {
-    background: rgba(36, 46, 219, 0.12);
-    box-shadow: 0 4px 4px rgba(54, 122, 255, 0.02);
+    background: var(--color-neutral-250);
   }
 }

@@ -14,21 +14,21 @@
   display: flex;
   align-items: center;
   height: 54px;
-  background: #ffffff;
-  border: 1.5px solid #ededed;
+  background: var(--color-white);
+  border: 1.5px solid var(--color-neutral-200);
   border-radius: 12px;
   transition: border-color 0.15s ease;
 
   &:focus-within {
-    border-color: #242edb;
+    border-color: var(--color-primary);
   }
 }
 
 .inputWrapperError {
-  border-color: #ef4444;
+  border-color: var(--color-error);
 
   &:focus-within {
-    border-color: #ef4444;
+    border-color: var(--color-error);
   }
 }
 
@@ -38,7 +38,7 @@
   justify-content: center;
   flex-shrink: 0;
   padding-left: 16px;
-  color: #c9c9c9;
+  color: var(--color-neutral-400);
 }
 
 .iconRight {
@@ -50,11 +50,11 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #c9c9c9;
+  color: var(--color-neutral-400);
   transition: color 0.15s ease;
 
   &:hover {
-    color: #232323;
+    color: var(--color-neutral-900);
   }
 }
 
@@ -74,10 +74,10 @@
   outline: none;
   font-family: inherit;
   font-size: 1rem;
-  color: #232323;
+  color: var(--color-neutral-900);
 
   &::placeholder {
-    color: #c9c9c9;
+    color: var(--color-neutral-400);
   }
 
   &[data-disabled] {
@@ -105,7 +105,7 @@
   transform: translateY(-50%);
   font-size: 1rem;
   font-weight: 400;
-  color: #c9c9c9;
+  color: var(--color-neutral-400);
   pointer-events: none;
   transition:
     top 0.15s ease,
@@ -137,12 +137,12 @@
   transform: translateY(0);
   font-size: 0.875rem;
   font-weight: 500;
-  color: #232323;
+  color: var(--color-neutral-900);
 }
 
 /* Error label */
 .floatingLabelError {
-  color: #ef4444 !important;
+  color: var(--color-error) !important;
 }
 
 /* ─────────────────────────────────────────────────────────── */
@@ -156,6 +156,6 @@
   padding-top: 6px;
   font-size: 0.75rem;
   font-weight: 400;
-  color: #ef4444;
+  color: var(--color-error);
   line-height: 1;
 }

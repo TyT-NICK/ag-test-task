@@ -10,9 +10,9 @@
 .bar {
   background: linear-gradient(
     90deg,
-    #f0f0f0 0%,
-    #e4e4e4 40%,
-    #f0f0f0 80%
+    var(--color-neutral-150) 0%,
+    var(--color-neutral-300) 40%,
+    var(--color-neutral-150) 80%
   );
   background-size: 200% 100%;
   animation: shimmer 1.4s ease-in-out infinite;

@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useCallback, useMemo, useState } from "react";
+import { useDebouncedCallback } from "@react-hookz/web";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -9,8 +10,14 @@ import type { ColumnDef, SortingState } from "@tanstack/react-table";
 import { usePathname, useRouter } from "@/shared/i18n/navigation";
 import { Table } from "@/shared/ui/Table";
 import type { SkeletonColumn } from "@/shared/ui/Table";
-import { Pagination, PaginationInfo, Rating } from "@/shared/ui";
-import { fetchProducts } from "@/features/products";
+import { Button, Modal, Pagination, PaginationInfo, Rating } from "@/shared/ui";
+import { DotsHorizontalIcon, PlusIcon, RefreshIcon } from "@/shared/ui/icons";
+import {
+  fetchProduct,
+  fetchProducts,
+  ProductForm,
+  ProductModal,
+} from "@/entities/product";
 import type { ProductListItem } from "@/entities/product";
 import styles from "./ProductsTable.module.css";
 import Image from "next/image";
@@ -22,7 +29,7 @@ const COLUMN_SIZES = {
   thumbnail: 68,
   brand: 240,
   sku: 190,
-  rating: 90,
+  rating: 120,
   price: 140,
   actions: 96,
 } as const;
@@ -75,6 +82,36 @@ export function ProductsTable() {
   const pathname = usePathname();
   const t = useTranslations("ProductsTable");
   const tCommon = useTranslations("common");
+  const queryClient = useQueryClient();
+
+  const [isAddOpen, setIsAddOpen] = useState(false);
+  const [editProductId, setEditProductId] = useState<number | null>(null);
+  const [viewProductId, setViewProductId] = useState<number | null>(null);
+
+  const handleCloseAdd = useCallback(() => setIsAddOpen(false), []);
+  const handleCloseEdit = useCallback(() => setEditProductId(null), []);
+
+  const handleRowMouseEnter = useDebouncedCallback(
+    (row: ProductListItem) =>
+      queryClient.prefetchQuery({
+        queryKey: ["product", row.id],
+        queryFn: () => fetchProduct(row.id),
+      }),
+    [queryClient],
+    150,
+  );
+
+  const { data: editProduct } = useQuery({
+    queryKey: ["product", editProductId],
+    queryFn: () => fetchProduct(editProductId!),
+    enabled: editProductId !== null,
+  });
+
+  const { data: viewProduct } = useQuery({
+    queryKey: ["product", viewProductId],
+    queryFn: () => fetchProduct(viewProductId!),
+    enabled: viewProductId !== null,
+  });
 
   const columns = useMemo(
     () =>
@@ -150,22 +187,19 @@ export function ProductsTable() {
           id: "actions",
           header: "",
           size: COLUMN_SIZES.actions,
-          cell: () => (
+          cell: ({ row }) => (
             <div className={styles.actions}>
-              <button
-                className={styles.addButton}
-                type="button"
-                aria-label="Добавить"
+              <Button
+                variant="secondary"
+                rounded
+                aria-label={t("editProduct")}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditProductId(row.original.id);
+                }}
               >
-                +
-              </button>
-              <button
-                className={styles.menuButton}
-                type="button"
-                aria-label="Меню"
-              >
-                <span className={styles.dots} />
-              </button>
+                <DotsHorizontalIcon size={12} />
+              </Button>
             </div>
           ),
         }),
@@ -193,6 +227,10 @@ export function ProductsTable() {
     queryFn: () => fetchProducts({ limit: LIMIT, skip, sortBy, order, q }),
   });
 
+  const handleRefresh = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: ["products"] });
+  }, [queryClient]);
+
   const handleSortingChange = useCallback(
     (newSorting: SortingState) => {
       const params = searchParams
@@ -217,6 +255,40 @@ export function ProductsTable() {
 
   return (
     <>
+      <Modal open={isAddOpen} onOpenChange={setIsAddOpen}>
+        <ProductForm onClose={handleCloseAdd} />
+      </Modal>
+      <Modal
+        open={editProductId !== null}
+        onOpenChange={(open) => !open && setEditProductId(null)}
+      >
+        {editProduct && (
+          <ProductForm product={editProduct} onClose={handleCloseEdit} />
+        )}
+      </Modal>
+      <Modal
+        open={viewProductId !== null}
+        onOpenChange={(open) => !open && setViewProductId(null)}
+      >
+        {viewProduct && <ProductModal product={viewProduct} />}
+      </Modal>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{t("title")}</h2>
+        <div className={styles.headerActions}>
+          <Button
+            variant="secondary"
+            rounded
+            aria-label={t("refresh")}
+            onClick={handleRefresh}
+          >
+            <RefreshIcon size={12} />
+          </Button>
+          <Button onClick={() => setIsAddOpen(true)}>
+            <PlusIcon />
+            {t("addProduct")}
+          </Button>
+        </div>
+      </div>
       <div className={styles.container}>
         <Table
           data={data?.products ?? []}
@@ -227,6 +299,8 @@ export function ProductsTable() {
           loading={isPending || isFetching}
           skeleton={SKELETON_COLUMNS}
           skeletonLimit={LIMIT}
+          onRowMouseEnter={handleRowMouseEnter}
+          onRowClick={(row) => setViewProductId(row.id)}
         />
       </div>
       <div

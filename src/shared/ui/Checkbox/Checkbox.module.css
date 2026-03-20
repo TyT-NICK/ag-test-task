@@ -19,7 +19,7 @@
 .labelText {
   font-size: 1rem;
   font-weight: 400;
-  color: #9c9c9c;
+  color: var(--color-neutral-600);
   user-select: none;
   line-height: 1;
 }
@@ -44,18 +44,18 @@
 
   &[data-unchecked] {
     background-color: transparent;
-    border: 2px solid #ededed;
+    border: 2px solid var(--color-neutral-200);
   }
 
   &[data-checked],
   &[data-indeterminate] {
-    background-color: #242edb;
-    border: 2px solid #242edb;
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-primary);
     box-shadow: none;
   }
 
   &:focus-visible {
-    outline: 2px solid #367aff;
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
   }
 
@@ -67,7 +67,7 @@
 
 .checkboxError {
   &[data-unchecked] {
-    border-color: #ef4444;
+    border-color: var(--color-error);
   }
 }
 
@@ -75,7 +75,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
+  color: var(--color-white);
 
   &[data-unchecked] {
     display: none;
@@ -85,7 +85,7 @@
 .errorMessage {
   font-size: 0.75rem;
   font-weight: 400;
-  color: #ef4444;
+  color: var(--color-error);
   line-height: 1;
   padding-left: 28px;
 }

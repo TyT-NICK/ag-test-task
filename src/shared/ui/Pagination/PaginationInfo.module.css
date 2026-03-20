@@ -5,10 +5,10 @@
 }
 
 .label {
-  color: #969b9f;
+  color: var(--color-neutral-650);
 }
 
 .value {
-  color: #333333;
+  color: var(--color-neutral-800);
   font-weight: 500;
 }

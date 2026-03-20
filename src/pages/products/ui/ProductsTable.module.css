@@ -4,7 +4,7 @@
   height: 36px;
   object-fit: cover;
   border-radius: 6px;
-  background-color: #ededed;
+  background-color: var(--color-neutral-200);
 }
 
 .titleCell {
@@ -16,46 +16,70 @@
 .titleText {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #232323;
+  color: var(--color-neutral-900);
   line-height: 1.3;
 }
 
 .categoryText {
   font-size: 0.75rem;
   font-weight: 400;
-  color: #9c9c9c;
+  color: var(--color-neutral-600);
   line-height: 1.3;
 }
 
 .brand {
   font-size: 0.875rem;
   font-weight: 700;
-  color: #232323;
+  color: var(--color-neutral-900);
 }
 
 .sku {
   font-size: 0.875rem;
-  color: #232323;
+  color: var(--color-neutral-900);
   font-variant-numeric: tabular-nums;
 }
 
 .rating {
   font-size: 0.875rem;
-  color: #232323;
+  color: var(--color-neutral-900);
   font-variant-numeric: tabular-nums;
 }
 
 .ratingLow {
   font-size: 0.875rem;
-  color: #ef4444;
+  color: var(--color-error);
   font-variant-numeric: tabular-nums;
 }
 
 .price {
   font-size: 0.875rem;
-  color: #232323;
+  color: var(--color-neutral-900);
   font-variant-numeric: tabular-nums;
 }
+
+/* ── Section header ── */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-neutral-900);
+  margin: 0;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 
 .container {
   flex: auto;
@@ -71,55 +95,6 @@
   justify-content: flex-end;
 }
 
-.addButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: none;
-  background-color: #242edb;
-  color: #ffffff;
-  font-size: 1.25rem;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0;
-  flex-shrink: 0;
-  transition: background-color 0.15s ease;
-
-  &:hover {
-    background-color: #1a22b8;
-  }
-}
-
-.menuButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: none;
-  background-color: #f0f0f0;
-  color: #9c9c9c;
-  cursor: pointer;
-  padding: 0;
-  flex-shrink: 0;
-  transition: background-color 0.15s ease;
-
-  &:hover {
-    background-color: #e0e0e0;
-  }
-}
-
-.dots {
-  display: block;
-  width: 14px;
-  height: 3px;
-  background: radial-gradient(circle, #9c9c9c 1.5px, transparent 1.5px) 0 / 5px
-    3px repeat-x;
-}
 
 /* ── Pagination footer ── */
 
@@ -136,6 +111,6 @@
 .loading {
   padding: 48px;
   text-align: center;
-  color: #9c9c9c;
+  color: var(--color-neutral-600);
   font-size: 0.875rem;
 }

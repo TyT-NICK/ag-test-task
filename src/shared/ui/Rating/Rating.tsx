@@ -1,6 +1,7 @@
 "use client";
 
 import { useId } from "react";
+import { Tooltip } from "@/shared/ui/Tooltip";
 import styles from "./Rating.module.css";
 
 const STAR_PATH =
@@ -40,7 +41,7 @@ function Star({ fill, color, clipId }: StarProps) {
           </clipPath>
         </defs>
       )}
-      <path d={STAR_PATH} fill="#e5e7eb" />
+      <path d={STAR_PATH} fill="var(--color-star-empty)" />
       {fill > 0 && (
         <path
           d={STAR_PATH}
@@ -58,16 +59,23 @@ export interface RatingProps {
 
 export function Rating({ value }: RatingProps) {
   const uid = useId();
-  const color = value >= 4 ? "#22c55e" : value < 3.5 ? "#ef4444" : "#f59e0b";
+  const color =
+    value >= 4
+      ? "var(--color-star-high)"
+      : value < 3.5
+        ? "var(--color-star-low)"
+        : "var(--color-star-medium)";
 
   return (
-    <div className={styles.root} aria-label={`${value} / 5`}>
-      {Array.from({ length: 5 }, (_, i) => {
-        const fill = getStarFill(value, i);
-        return (
-          <Star key={i} fill={fill} color={color} clipId={`${uid}-${i}`} />
-        );
-      })}
-    </div>
+    <Tooltip content={`${value} / 5`} delay={100}>
+      <div className={styles.root} aria-label={`${value} / 5`}>
+        {Array.from({ length: 5 }, (_, i) => {
+          const fill = getStarFill(value, i);
+          return (
+            <Star key={i} fill={fill} color={color} clipId={`${uid}-${i}`} />
+          );
+        })}
+      </div>
+    </Tooltip>
   );
 }

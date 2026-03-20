@@ -1,4 +1,5 @@
 import { Select as BaseSelect } from "@base-ui/react/select";
+import { CheckIcon, ChevronDownIcon } from "@/shared/ui/icons";
 import { cn } from "@/shared/lib/cn";
 import styles from "./Select.module.css";
 
@@ -17,34 +18,6 @@ type SelectProps = {
   disabled?: boolean;
   className?: string;
 };
-
-function ChevronIcon() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="currentColor"
-      aria-hidden
-    >
-      <path d="M4.293 5.293a1 1 0 0 1 1.414 0L8 7.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="currentColor"
-      aria-hidden
-    >
-      <path d="M10.293 2.293a1 1 0 0 1 1.414 1.414l-6 6a1 1 0 0 1-1.414 0l-3-3a1 1 0 1 1 1.414-1.414L5 7.586l5.293-5.293z" />
-    </svg>
-  );
-}
 
 export function Select({
   value,
@@ -71,7 +44,7 @@ export function Select({
             className={styles.value}
           />
           <BaseSelect.Icon className={styles.icon}>
-            <ChevronIcon />
+            <ChevronDownIcon />
           </BaseSelect.Icon>
         </BaseSelect.Trigger>
         <BaseSelect.Portal>

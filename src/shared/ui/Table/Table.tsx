@@ -67,6 +67,8 @@ export interface TableProps<TData> {
   sorting?: SortingState;
   onSortingChange?: (sorting: SortingState) => void;
   onSelectChange?: (ids: Set<string>) => void;
+  onRowMouseEnter?: (row: TData) => void;
+  onRowClick?: (row: TData) => void;
   getRowId?: (row: TData) => string;
   loading?: boolean;
   skeleton?: SkeletonColumn[];
@@ -79,6 +81,8 @@ export function Table<TData>({
   sorting = [],
   onSortingChange,
   onSelectChange,
+  onRowMouseEnter,
+  onRowClick,
   getRowId,
   loading,
   skeleton,
@@ -224,7 +228,10 @@ export function Table<TData>({
                 className={cn(
                   styles.row,
                   row.getIsSelected() && styles.rowSelected,
+                  onRowClick && styles.rowClickable,
                 )}
+                onMouseEnter={onRowMouseEnter ? () => onRowMouseEnter(row.original) : undefined}
+                onClick={onRowClick ? () => onRowClick(row.original) : undefined}
               >
                 {row.getVisibleCells().map((cell) => (
                   <td

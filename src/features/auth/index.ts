@@ -1,3 +1,5 @@
+export type { LoginCredentials, SessionUser } from './model/types';
+export { loginCredentialsSchema } from './model/schema';
 export { proxyLogin } from './api/proxyLogin';
 export { proxyRefresh } from './api/proxyRefresh';
 export { proxyMe } from './api/proxyMe';

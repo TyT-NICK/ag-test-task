@@ -5,13 +5,13 @@
 .popup {
   max-width: 280px;
   padding: 12px 16px;
-  background: #232323;
-  color: #ffffff;
+  background: var(--color-neutral-900);
+  color: var(--color-white);
   font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.5;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 8px 24px var(--color-shadow-2xl);
   outline: none;
 
   transition:
@@ -33,15 +33,15 @@
 .arrow {
   width: 10px;
   height: 5px;
-  fill: #232323;
+  fill: var(--color-neutral-900);
 }
 
 .link {
-  color: #a5b4fc;
+  color: var(--color-accent-light);
   text-decoration: underline;
   word-break: break-all;
 
   &:hover {
-    color: #c7d2fe;
+    color: var(--color-accent-light-hover);
   }
 }

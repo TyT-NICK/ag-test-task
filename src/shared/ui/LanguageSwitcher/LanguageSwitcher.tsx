@@ -5,20 +5,13 @@ import { useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "@/shared/i18n/navigation";
 import { routing } from "@/shared/i18n/routing";
+import { ChevronDownIcon } from "@/shared/ui/icons";
 import styles from "./LanguageSwitcher.module.css";
 
 const LOCALE_LABELS: Record<string, string> = {
   en: "EN",
   ru: "RU",
 };
-
-function ChevronIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
-      <path d="M4.293 5.293a1 1 0 0 1 1.414 0L8 7.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-3 3a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 0-1.414z" />
-    </svg>
-  );
-}
 
 export function LanguageSwitcher() {
   const locale = useLocale();
@@ -37,7 +30,7 @@ export function LanguageSwitcher() {
       <BaseSelect.Trigger className={styles.trigger}>
         <BaseSelect.Value className={styles.value} />
         <BaseSelect.Icon className={styles.icon}>
-          <ChevronIcon />
+          <ChevronDownIcon />
         </BaseSelect.Icon>
       </BaseSelect.Trigger>
       <BaseSelect.Portal>

@@ -1,0 +1,20 @@
+:root {
+  /* ── Primary variant ──────────────────────────────────────── */
+  --variant-primary-bg:
+    linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.12),
+      rgba(255, 255, 255, 0)
+    ),
+    var(--color-primary);
+  --variant-primary-border: var(--color-focus);
+  --variant-primary-color: var(--color-white);
+  --variant-primary-shadow:
+    0 8px 8px var(--color-shadow-focus),
+    inset 0 -2px 0 var(--color-shadow-md);
+
+  /* ── Secondary variant ────────────────────────────────────── */
+  --variant-secondary-bg: var(--color-white);
+  --variant-secondary-border: var(--color-neutral-250);
+  --variant-secondary-color: var(--color-neutral-700);
+}

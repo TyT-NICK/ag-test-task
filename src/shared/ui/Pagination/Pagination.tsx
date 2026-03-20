@@ -2,6 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useRouter, usePathname } from "@/shared/i18n/navigation";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/shared/ui/icons";
 import { cn } from "@/shared/lib/cn";
 import styles from "./Pagination.module.css";
 
@@ -26,34 +27,6 @@ function buildPageList(current: number, total: number): (number | "…")[] {
   pages.push(total);
 
   return pages;
-}
-
-function ChevronLeft() {
-  return (
-    <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
-      <path
-        d="M7 1L1 7L7 13"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ChevronRight() {
-  return (
-    <svg width="8" height="14" viewBox="0 0 8 14" fill="none">
-      <path
-        d="M1 1L7 7L1 13"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
 }
 
 export function Pagination({
@@ -82,7 +55,13 @@ export function Pagination({
   const pages = buildPageList(currentPage, totalPages);
 
   if (totalPages <= 1) {
-    return <nav className={styles.root} aria-label="Pagination" style={{ visibility: "hidden" }} />;
+    return (
+      <nav
+        className={styles.root}
+        aria-label="Pagination"
+        style={{ visibility: "hidden" }}
+      />
+    );
   }
 
   return (
@@ -93,7 +72,7 @@ export function Pagination({
         disabled={currentPage === 1}
         aria-label="Previous page"
       >
-        <ChevronLeft />
+        <ChevronLeftIcon />
       </button>
 
       {pages.map((page, i) =>
@@ -122,7 +101,7 @@ export function Pagination({
         disabled={currentPage === totalPages}
         aria-label="Next page"
       >
-        <ChevronRight />
+        <ChevronRightIcon />
       </button>
     </nav>
   );

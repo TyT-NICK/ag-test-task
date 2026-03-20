@@ -2,16 +2,20 @@
   cursor: pointer;
 }
 
+.positioner {
+  z-index: 100;
+}
+
 .popup {
   max-width: 260px;
   padding: 10px 14px;
-  background: #232323;
-  color: #ffffff;
+  background: var(--color-neutral-900);
+  color: var(--color-white);
   font-size: 0.8125rem;
   font-weight: 400;
   line-height: 1.5;
   border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 8px 24px var(--color-shadow-xl);
 
   /* enter */
   transition:
@@ -33,5 +37,5 @@
 .arrow {
   width: 10px;
   height: 5px;
-  fill: #232323;
+  fill: var(--color-neutral-900);
 }

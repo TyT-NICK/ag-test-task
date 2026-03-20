@@ -1,1 +1,10 @@
 export type { Product, ProductListItem, ProductsResponse } from "./model/types";
+export { productBodySchema } from "./model/schema";
+export { fetchProduct, fetchProducts, addProduct, updateProduct } from "./api/productsApi";
+export type { ProductsParams } from "./api/productsApi";
+export { proxyProduct } from "./api/proxyProduct";
+export { proxyProducts } from "./api/proxyProducts";
+export { proxyAddProduct } from "./api/proxyAddProduct";
+export { proxyUpdateProduct } from "./api/proxyUpdateProduct";
+export { ProductForm } from "./ui/ProductForm";
+export { ProductModal } from "./ui/ProductModal";

@@ -7,13 +7,19 @@ type Variant = "primary" | "secondary";
 
 type ButtonProps = Omit<ComponentProps<typeof BaseButton>, "className"> & {
   variant?: Variant;
+  rounded?: boolean;
   className?: string;
 };
 
-export function Button({ variant = "primary", className, ...props }: ButtonProps) {
+export function Button({ variant = "primary", rounded, className, ...props }: ButtonProps) {
   return (
     <BaseButton
-      className={cn(styles.button, styles[variant], className)}
+      className={cn(
+        styles.button,
+        styles[variant],
+        rounded && styles.rounded,
+        className,
+      )}
       {...props}
     />
   );

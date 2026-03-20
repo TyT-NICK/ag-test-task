@@ -1,5 +1,5 @@
 import { client } from "@/shared/api";
-import type { SessionUser } from "@/entities/session";
+import type { SessionUser } from "../model/types";
 
 export type MeResponse = Omit<SessionUser, "accessToken" | "refreshToken">;
 

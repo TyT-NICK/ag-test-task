@@ -4,15 +4,15 @@
   gap: 8px;
   padding: 4px 8px 4px 4px;
   border-radius: 20px;
-  border: 1px solid #ededed;
-  background-color: #ffffff;
+  border: 1px solid var(--color-neutral-200);
+  background-color: var(--color-white);
 }
 
 .avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #f0f0f0;
+  background-color: var(--color-neutral-150);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -30,13 +30,13 @@
 .avatarFallback {
   width: 18px;
   height: 18px;
-  color: #9c9c9c;
+  color: var(--color-neutral-600);
 }
 
 .name {
   font-size: 0.875rem;
   font-weight: 500;
-  color: #232323;
+  color: var(--color-neutral-900);
   white-space: nowrap;
   padding-right: 4px;
 }

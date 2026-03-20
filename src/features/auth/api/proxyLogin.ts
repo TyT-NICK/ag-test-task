@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { API_URL, DEFAULT_EXPIRES_IN_MINS } from "@/shared/config/env";
-import { loginCredentialsSchema, SessionUser } from "@/entities/session";
+import { loginCredentialsSchema } from "../model/schema";
+import type { SessionUser } from "../model/types";
 import { ApiError, ValidationError } from "@/shared/lib/error";
 import { handleApiError } from "@/shared/api/handleApiError";
 import { setAuthCookies } from "./setAuthCookies";
