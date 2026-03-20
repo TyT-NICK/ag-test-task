@@ -32,8 +32,10 @@ function getColumnStyle(column: Column<any, unknown>): React.CSSProperties {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getHeaderContentStyle(column: Column<any, unknown>): React.CSSProperties | undefined {
+function getHeaderContentStyle(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  column: Column<any, unknown>,
+): React.CSSProperties | undefined {
   const align = column.columnDef.meta?.align;
   if (!align) return undefined;
   return { justifyContent: ALIGN_TO_JUSTIFY[align] };
@@ -167,7 +169,10 @@ export function Table<TData>({
                   style={getColumnStyle(header.column)}
                   onClick={header.column.getToggleSortingHandler()}
                 >
-                  <span className={styles.thContent} style={getHeaderContentStyle(header.column)}>
+                  <span
+                    className={styles.thContent}
+                    style={getHeaderContentStyle(header.column)}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -203,8 +208,13 @@ export function Table<TData>({
                           width: skCol?.barWidth ?? "80%",
                           height: skCol?.barHeight ?? 14,
                           borderRadius: skCol?.barRadius ?? 4,
-                          marginLeft: skCol?.align === "right" || skCol?.align === "center" ? "auto" : undefined,
-                          marginRight: skCol?.align === "center" ? "auto" : undefined,
+                          marginLeft:
+                            skCol?.align === "right" ||
+                            skCol?.align === "center"
+                              ? "auto"
+                              : undefined,
+                          marginRight:
+                            skCol?.align === "center" ? "auto" : undefined,
                         }}
                       />
                     </td>
@@ -230,8 +240,14 @@ export function Table<TData>({
                   row.getIsSelected() && styles.rowSelected,
                   onRowClick && styles.rowClickable,
                 )}
-                onMouseEnter={onRowMouseEnter ? () => onRowMouseEnter(row.original) : undefined}
-                onClick={onRowClick ? () => onRowClick(row.original) : undefined}
+                onMouseEnter={
+                  onRowMouseEnter
+                    ? () => onRowMouseEnter(row.original)
+                    : undefined
+                }
+                onClick={
+                  onRowClick ? () => onRowClick(row.original) : undefined
+                }
               >
                 {row.getVisibleCells().map((cell) => (
                   <td

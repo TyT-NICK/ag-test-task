@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { z } from "zod";
 import { loginApi } from "../api/loginApi";
 import { loginCredentialsSchema } from "../model/schema";
+import { registerUnloadLogout } from "../lib/unloadLogout";
 import useZodForm from "@/shared/lib/hooks/useZodForm";
 import {
   Button,
@@ -37,7 +38,10 @@ export function LoginForm() {
 
   const { mutate: login, isPending } = useMutation({
     mutationFn: loginApi,
-    onSuccess: () => router.replace(searchParams?.get("from") ?? "/"),
+    onSuccess: (_, { rememberMe }) => {
+      if (!rememberMe) registerUnloadLogout();
+      router.replace(searchParams?.get("from") ?? "/");
+    },
     onError: (error) => {
       const status = isAxiosError(error) ? error.response?.status : undefined;
       const key =

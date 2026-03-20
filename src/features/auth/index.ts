@@ -8,3 +8,4 @@ export { logoutApi } from './api/logoutApi';
 export { handleLogout } from './api/handleLogout';
 export type { MeResponse } from './api/meApi';
 export { LoginForm } from './ui/LoginForm';
+export { registerUnloadLogout, unregisterUnloadLogout } from './lib/unloadLogout';

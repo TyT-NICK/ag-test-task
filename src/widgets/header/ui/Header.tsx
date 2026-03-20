@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
-import { logoutApi } from "@/features/auth";
+import { logoutApi, unregisterUnloadLogout } from "@/features/auth";
 import { useRouter } from "@/shared/i18n/navigation";
 import { LanguageSwitcher } from "@/shared/ui/LanguageSwitcher";
 import { SearchBar } from "@/shared/ui/SearchBar";
@@ -15,6 +15,7 @@ export function Header() {
   const router = useRouter();
 
   async function handleLogout() {
+    unregisterUnloadLogout();
     await logoutApi();
     queryClient.clear();
     router.replace("/login");
