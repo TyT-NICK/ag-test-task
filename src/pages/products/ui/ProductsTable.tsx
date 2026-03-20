@@ -2,7 +2,11 @@
 
 import { useCallback, useMemo, useState } from "react";
 import { useIdlePrefetch } from "@/shared/lib/hooks/useIdlePrefetch";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { createColumnHelper } from "@tanstack/react-table";
@@ -70,7 +74,6 @@ const SKELETON_COLUMNS: SkeletonColumn[] = [
 ];
 
 const columnHelper = createColumnHelper<ProductListItem>();
-
 
 export function ProductsTable() {
   const searchParams = useSearchParams();
@@ -166,7 +169,10 @@ export function ProductsTable() {
           enableSorting: true,
           meta: { align: COLUMN_ALIGNS.price },
           cell: ({ row }) => (
-            <Price price={row.original.price} discountPercentage={row.original.discountPercentage} />
+            <Price
+              price={row.original.price}
+              discountPercentage={row.original.discountPercentage}
+            />
           ),
         }),
         columnHelper.display({
@@ -211,6 +217,7 @@ export function ProductsTable() {
   const { data, isFetching, isPending } = useQuery({
     queryKey: ["products", { page: page ?? 1, sortBy, order, q }],
     queryFn: () => fetchProducts({ limit: LIMIT, skip, sortBy, order, q }),
+    placeholderData: keepPreviousData,
   });
 
   useIdlePrefetch(
@@ -301,10 +308,10 @@ export function ProductsTable() {
       </div>
       <div
         className={styles.footer}
-        style={isPending || isFetching ? { visibility: "hidden" } : undefined}
+        style={isPending ? { visibility: "hidden" } : undefined}
       >
         <PaginationInfo from={from} to={to} total={total} />
-        <Pagination total={total} limit={LIMIT} />
+        <Pagination total={total} limit={LIMIT} loading={isFetching} />
       </div>
     </>
   );

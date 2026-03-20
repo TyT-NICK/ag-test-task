@@ -9,6 +9,7 @@ import styles from "./Pagination.module.css";
 interface PaginationProps {
   total: number;
   limit: number;
+  loading?: boolean;
   paramKey?: string;
 }
 
@@ -32,6 +33,7 @@ function buildPageList(current: number, total: number): (number | "…")[] {
 export function Pagination({
   total,
   limit,
+  loading = false,
   paramKey = "page",
 }: PaginationProps) {
   const searchParams = useSearchParams();
@@ -87,7 +89,11 @@ export function Pagination({
             onClick={() => navigate(page)}
             aria-current={page === currentPage ? "page" : undefined}
           >
-            {page}
+            {loading && page === currentPage ? (
+              <span className={styles.spinner} />
+            ) : (
+              page
+            )}
           </button>
         ),
       )}
