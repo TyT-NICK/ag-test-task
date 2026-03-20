@@ -1,12 +1,14 @@
-"use client";
-
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMe } from "@/features/auth";
 import { UserIcon } from "@/shared/ui/icons";
 import styles from "./UserInfo.module.css";
 
-export function UserInfo() {
+type UserInfoProps = {
+  onClick?: () => void;
+};
+
+export function UserInfo({ onClick }: UserInfoProps) {
   const { data: user } = useQuery({
     queryKey: ["me"],
     queryFn: fetchMe,
@@ -14,7 +16,7 @@ export function UserInfo() {
   });
 
   return (
-    <div className={styles.root}>
+    <button className={styles.root} onClick={onClick}>
       <div className={styles.avatar}>
         {user?.image ? (
           <Image
@@ -33,6 +35,6 @@ export function UserInfo() {
           {user.firstName} {user.lastName}
         </span>
       )}
-    </div>
+    </button>
   );
 }

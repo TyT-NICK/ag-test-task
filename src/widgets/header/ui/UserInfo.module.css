@@ -6,6 +6,15 @@
   border-radius: 20px;
   border: 1px solid var(--color-neutral-200);
   background-color: var(--color-white);
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s ease;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--color-neutral-400);
+    }
+  }
 }
 
 .avatar {

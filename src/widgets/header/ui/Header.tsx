@@ -1,6 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
+import { logoutApi } from "@/features/auth";
+import { useRouter } from "@/shared/i18n/navigation";
 import { LanguageSwitcher } from "@/shared/ui/LanguageSwitcher";
 import { SearchBar } from "@/shared/ui/SearchBar";
 import { UserInfo } from "./UserInfo";
@@ -8,6 +11,14 @@ import styles from "./Header.module.css";
 
 export function Header() {
   const t = useTranslations("Header");
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
+  async function handleLogout() {
+    await logoutApi();
+    queryClient.clear();
+    router.replace("/login");
+  }
 
   return (
     <header className={styles.header}>
@@ -19,7 +30,7 @@ export function Header() {
       </div>
       <div className={styles.right}>
         <LanguageSwitcher />
-        <UserInfo />
+        <UserInfo onClick={handleLogout} />
       </div>
     </header>
   );

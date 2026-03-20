@@ -1,4 +1,10 @@
-export function UserIcon({ size = 16 }: { size?: number }) {
+export function UserIcon({
+  size = 16,
+  className,
+}: {
+  size?: number;
+  className?: string;
+}) {
   return (
     <svg
       width={size}
@@ -9,6 +15,7 @@ export function UserIcon({ size = 16 }: { size?: number }) {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      className={className}
     >
       <circle cx="12" cy="8" r="4" />
       <path d="M6 20v-2a6 6 0 0 1 12 0v2" />
