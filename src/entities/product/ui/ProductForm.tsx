@@ -1,13 +1,15 @@
-"use client";
-
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 import { toast } from "react-toastify";
 import { productBodySchema } from "../model/schema";
 import { addProduct, updateProduct } from "../api/productsApi";
-import type { Product } from "../model/types";
+import type {
+  Product,
+  ProductListItem,
+  ProductsResponse,
+} from "../model/types";
 import useZodForm from "@/shared/lib/hooks/useZodForm";
+import { useOptimisticMutation } from "@/shared/lib/hooks/useOptimisticMutation";
 import { Button, Input } from "@/shared/ui";
 import styles from "./ProductForm.module.css";
 
@@ -26,29 +28,76 @@ type ProductFormProps = {
   product?: Product;
 };
 
+const PRODUCTS_FILTER = { queryKey: ["products"] };
+
 export function ProductForm({ onClose, product }: ProductFormProps) {
   const t = useTranslations("ProductForm");
-  const queryClient = useQueryClient();
   const isEditing = product !== undefined;
 
-  const { mutate: add, isPending: isAdding } = useMutation({
+  const { mutate: add, isPending: isAdding } = useOptimisticMutation({
     mutationFn: addProduct,
+    cacheUpdates: [
+      {
+        filters: PRODUCTS_FILTER,
+        updater: (
+          old: ProductsResponse | undefined,
+          variables: ProductFormValues,
+        ) =>
+          old
+            ? {
+                ...old,
+                total: old.total + 1,
+                products: [
+                  {
+                    id: Date.now(),
+                    sku: "",
+                    rating: 0,
+                    category: "",
+                    thumbnail: "",
+                    ...variables,
+                  } satisfies ProductListItem,
+                  ...old.products,
+                ],
+              }
+            : old,
+      },
+    ],
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
       toast.success(t("addSuccess"));
       onClose();
     },
     onError: () => toast.error(t("addError")),
   });
 
-  const { mutate: edit, isPending: isEditing_ } = useMutation({
+  const { mutate: edit, isPending: isEditing_ } = useOptimisticMutation({
     mutationFn: (body: Partial<ProductFormValues>) =>
       updateProduct(product!.id, body),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["products"] });
-      toast.success(t("editSuccess"));
-      onClose();
-    },
+    cacheUpdates: [
+      {
+        filters: PRODUCTS_FILTER,
+        updater: (
+          old: ProductsResponse | undefined,
+          variables: Partial<ProductFormValues>,
+        ) =>
+          old
+            ? {
+                ...old,
+                products: old.products.map((p) =>
+                  p.id === product!.id ? { ...p, ...variables } : p,
+                ),
+              }
+            : old,
+      },
+      {
+        filters: { queryKey: ["product", product?.id] },
+        updater: (
+          old: Product | undefined,
+          variables: Partial<ProductFormValues>,
+        ) => (old ? { ...old, ...variables } : old),
+      },
+    ],
+    onMutate: onClose,
+    onSuccess: () => toast.success(t("editSuccess")),
     onError: () => toast.error(t("editError")),
   });
 

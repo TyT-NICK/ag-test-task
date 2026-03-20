@@ -26,8 +26,9 @@ export function ProductModal({ product }: ProductModalProps) {
         <div className={styles.headerInfo}>
           <h2 className={styles.title}>{product.title}</h2>
           <div className={styles.meta}>
-            {product.brand && <span className={styles.brand}>{product.brand}</span>}
-            <span className={styles.category}>{product.category}</span>
+            {product.brand && (
+              <span className={styles.brand}>{product.brand}</span>
+            )}
           </div>
           <Rating value={product.rating} />
         </div>
@@ -45,7 +46,9 @@ export function ProductModal({ product }: ProductModalProps) {
         {product.discountPercentage > 0 && (
           <div className={styles.stat}>
             <span className={styles.statLabel}>{t("discount")}</span>
-            <span className={styles.statValue}>{product.discountPercentage}%</span>
+            <span className={styles.statValue}>
+              {product.discountPercentage}%
+            </span>
           </div>
         )}
         <div className={styles.stat}>
@@ -69,7 +72,9 @@ export function ProductModal({ product }: ProductModalProps) {
       {product.tags.length > 0 && (
         <div className={styles.tags}>
           {product.tags.map((tag) => (
-            <span key={tag} className={styles.tag}>{tag}</span>
+            <span key={tag} className={styles.tag}>
+              {tag}
+            </span>
           ))}
         </div>
       )}
@@ -77,11 +82,15 @@ export function ProductModal({ product }: ProductModalProps) {
       <div className={styles.policies}>
         <div className={styles.policy}>
           <span className={styles.policyLabel}>{t("warranty")}</span>
-          <span className={styles.policyValue}>{product.warrantyInformation}</span>
+          <span className={styles.policyValue}>
+            {product.warrantyInformation}
+          </span>
         </div>
         <div className={styles.policy}>
           <span className={styles.policyLabel}>{t("shipping")}</span>
-          <span className={styles.policyValue}>{product.shippingInformation}</span>
+          <span className={styles.policyValue}>
+            {product.shippingInformation}
+          </span>
         </div>
         <div className={styles.policy}>
           <span className={styles.policyLabel}>{t("returnPolicy")}</span>

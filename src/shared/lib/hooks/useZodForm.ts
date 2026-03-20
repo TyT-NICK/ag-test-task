@@ -1,3 +1,5 @@
+"use client";
+
 import { useForm, UseFormProps } from "react-hook-form";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import z, { ZodObject, ZodRawShape } from "zod";

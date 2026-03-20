@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import { useDebouncedCallback } from "@react-hookz/web";
+import { useIdlePrefetch } from "@/shared/lib/hooks/useIdlePrefetch";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -91,16 +91,6 @@ export function ProductsTable() {
   const handleCloseAdd = useCallback(() => setIsAddOpen(false), []);
   const handleCloseEdit = useCallback(() => setEditProductId(null), []);
 
-  const handleRowMouseEnter = useDebouncedCallback(
-    (row: ProductListItem) =>
-      queryClient.prefetchQuery({
-        queryKey: ["product", row.id],
-        queryFn: () => fetchProduct(row.id),
-      }),
-    [queryClient],
-    150,
-  );
-
   const { data: editProduct } = useQuery({
     queryKey: ["product", editProductId],
     queryFn: () => fetchProduct(editProductId!),
@@ -152,7 +142,7 @@ export function ProductsTable() {
           enableSorting: false,
           cell: ({ getValue }) => (
             <span className={styles.brand}>
-              {getValue() ?? tCommon("notSpecified")}
+              {getValue() || tCommon("notSpecified")}
             </span>
           ),
         }),
@@ -227,6 +217,17 @@ export function ProductsTable() {
     queryFn: () => fetchProducts({ limit: LIMIT, skip, sortBy, order, q }),
   });
 
+  useIdlePrefetch(
+    data?.products,
+    useCallback(
+      (product) => ({
+        queryKey: ["product", product.id] as const,
+        queryFn: () => fetchProduct(product.id),
+      }),
+      [],
+    ),
+  );
+
   const handleRefresh = useCallback(() => {
     queryClient.invalidateQueries({ queryKey: ["products"] });
   }, [queryClient]);
@@ -299,7 +300,6 @@ export function ProductsTable() {
           loading={isPending || isFetching}
           skeleton={SKELETON_COLUMNS}
           skeletonLimit={LIMIT}
-          onRowMouseEnter={handleRowMouseEnter}
           onRowClick={(row) => setViewProductId(row.id)}
         />
       </div>
