@@ -2,13 +2,11 @@ import axios, { type InternalAxiosRequestConfig } from "axios";
 
 export const client = axios.create({
   baseURL: "/api",
-  withCredentials: true, // send HttpOnly cookies on every request
+  withCredentials: true,
 });
 
-/* ── 401 → refresh → retry ─────────────────────────────────── */
-
 type FailedRequest = {
-  resolve: () => void;
+  resolve: VoidFunction;
   reject: (err: unknown) => void;
 };
 
@@ -34,7 +32,6 @@ client.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // Queue concurrent 401s while a refresh is already in flight
     if (isRefreshing) {
       return new Promise<void>((resolve, reject) => {
         queue.push({ resolve, reject });

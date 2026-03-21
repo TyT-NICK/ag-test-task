@@ -12,7 +12,7 @@ const paramsSchema = z.object({
 
 export async function proxyUpdateProduct(
   request: NextRequest,
-  params: Promise<{ id: string }>,
+  { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
   try {
     const paramsResult = paramsSchema.safeParse(await params);

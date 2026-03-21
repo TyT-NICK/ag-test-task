@@ -13,7 +13,7 @@ import styles from "./AddProductForm.module.css";
 import { addProduct } from "../api/addProduct";
 
 type AddProductFormProps = {
-  onClose: () => void;
+  onClose: VoidFunction;
 };
 
 const PRODUCTS_FILTER = { queryKey: ["products"] };
@@ -26,35 +26,38 @@ export function AddProductForm({ onClose }: AddProductFormProps) {
     cacheUpdates: [
       {
         filters: PRODUCTS_FILTER,
-        updater: (
+        updater(
           old: ProductsResponse | undefined,
           variables: ProductBodyValues,
-        ) =>
-          old
-            ? {
-                ...old,
-                total: old.total + 1,
-                products: [
-                  {
-                    id: Date.now(),
-                    sku: "",
-                    rating: 0,
-                    category: "",
-                    thumbnail: "",
-                    discountPercentage: 0,
-                    ...variables,
-                  } satisfies ProductListItem,
-                  ...old.products,
-                ],
-              }
-            : old,
+        ) {
+          if (!old) return old;
+
+          return {
+            ...old,
+            total: old.total + 1,
+            products: [
+              {
+                id: Date.now(),
+                sku: "",
+                rating: 0,
+                category: "",
+                thumbnail: "",
+                discountPercentage: 0,
+                ...variables,
+              } satisfies ProductListItem,
+              ...old.products,
+            ],
+          };
+        },
       },
     ],
-    onSuccess: () => {
+    onSuccess() {
       toast.success(t("addSuccess"));
       onClose();
     },
-    onError: () => toast.error(t("addError")),
+    onError() {
+      toast.error(t("addError"));
+    },
   });
 
   const {

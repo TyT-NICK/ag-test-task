@@ -20,7 +20,7 @@ export function useOptimisticMutation<TData, TError, TVariables>({
   UseMutationOptions<TData, TError, TVariables>,
   "onSuccess" | "onError"
 > & {
-    onMutate?: () => void;
+    onMutate?: VoidFunction;
   }) {
   const queryClient = useQueryClient();
 

@@ -11,7 +11,7 @@ const paramsSchema = z.object({
 
 export async function proxyProduct(
   request: NextRequest,
-  params: Promise<{ id: string }>,
+  { params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
   try {
     const result = paramsSchema.safeParse(await params);

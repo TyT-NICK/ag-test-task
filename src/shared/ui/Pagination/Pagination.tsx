@@ -43,7 +43,7 @@ export function Pagination({
   const currentPage = Math.max(1, Number(searchParams?.get(paramKey) ?? 1));
   const totalPages = Math.ceil(total / limit);
 
-  const navigate = (page: number) => {
+  function navigate(page: number) {
     const params = new URLSearchParams(searchParams?.toString() ?? "");
     if (page <= 1) {
       params.delete(paramKey);
@@ -52,7 +52,7 @@ export function Pagination({
     }
     const query = params.toString();
     router.push(`${pathname}${query ? `?${query}` : ""}`);
-  };
+  }
 
   const pages = buildPageList(currentPage, totalPages);
 

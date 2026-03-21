@@ -5,7 +5,7 @@ import { UserIcon } from "@/shared/ui/icons";
 import styles from "./UserInfo.module.css";
 
 type UserInfoProps = {
-  onClick?: () => void;
+  onClick?: VoidFunction;
 };
 
 export function UserInfo({ onClick }: UserInfoProps) {

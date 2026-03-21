@@ -39,18 +39,21 @@ export function LoginForm() {
 
   const { mutate: login, isPending } = useMutation({
     mutationFn: loginApi,
-    onSuccess: (_, { rememberMe }) => {
+    onSuccess(_, { rememberMe }) {
       if (!rememberMe) registerUnloadLogout();
+
       router.replace(searchParams?.get("from") ?? "/");
     },
-    onError: (error) => {
+    onError(error) {
       const status = isAxiosError(error) ? error.response?.status : undefined;
+
       const key =
         status === 401
           ? "errors.invalidCredentials"
           : status === 503
             ? "errors.serviceUnavailable"
             : "errors.default";
+
       toast.error(t(key));
     },
   });

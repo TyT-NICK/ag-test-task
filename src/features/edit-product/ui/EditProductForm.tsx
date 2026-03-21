@@ -14,7 +14,7 @@ import { updateProduct } from "../api/updateProduct";
 
 type EditProductFormProps = {
   product: Product;
-  onClose: () => void;
+  onClose: VoidFunction;
 };
 
 const PRODUCTS_FILTER = { queryKey: ["products"] };
@@ -28,25 +28,30 @@ export function EditProductForm({ product, onClose }: EditProductFormProps) {
     cacheUpdates: [
       {
         filters: PRODUCTS_FILTER,
-        updater: (
+        updater(
           old: ProductsResponse | undefined,
           variables: Partial<ProductBodyValues>,
-        ) =>
-          old
-            ? {
-                ...old,
-                products: old.products.map((p) =>
-                  p.id === product.id ? { ...p, ...variables } : p,
-                ),
-              }
-            : old,
+        ) {
+          if (!old) return old;
+
+          return {
+            ...old,
+            products: old.products.map((p) =>
+              p.id === product.id ? { ...p, ...variables } : p,
+            ),
+          };
+        },
       },
       {
         filters: { queryKey: ["product", product.id] },
-        updater: (
+        updater(
           old: Product | undefined,
           variables: Partial<ProductBodyValues>,
-        ) => (old ? { ...old, ...variables } : old),
+        ) {
+          if (!old) return old;
+
+          return { ...old, ...variables };
+        },
       },
     ],
     onMutate: onClose,
