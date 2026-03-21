@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export type ProductBodyValues = z.infer<typeof productBodySchema>;
+
 export const productBodySchema = z.object({
   title: z.string().min(1, "required"),
   description: z.string().optional(),

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { API_URL } from "@/shared/config/env";
-import type { Product } from "../model/types";
-import { productBodySchema } from "../model/schema";
+import type { Product } from "../../../entities/product/model/types";
+import { productBodySchema } from "../../../entities/product/model/schema";
 import { ApiError, ValidationError } from "@/shared/lib/error";
 import { handleApiError } from "@/shared/api/handleApiError";
 

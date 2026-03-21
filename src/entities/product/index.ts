@@ -1,16 +1,12 @@
 export type { Product, ProductListItem, ProductsResponse } from "./model/types";
 export { productBodySchema } from "./model/schema";
-export {
-  fetchProduct,
-  fetchProducts,
-  addProduct,
-  updateProduct,
-} from "./api/productsApi";
+export type { ProductBodyValues } from "./model/schema";
+export { fetchProduct, fetchProducts } from "./api/productsApi";
 export type { ProductsParams } from "./api/productsApi";
 export { proxyProduct } from "./api/proxyProduct";
 export { proxyProducts } from "./api/proxyProducts";
-export { proxyAddProduct } from "./api/proxyAddProduct";
-export { proxyUpdateProduct } from "./api/proxyUpdateProduct";
-export { ProductForm } from "./ui/ProductForm";
+export { proxyAddProduct } from "../../features/add-product/api/proxyAddProduct";
+export { proxyUpdateProduct } from "../../features/edit-product/api/proxyUpdateProduct";
+export { ProductFormFields } from "./ui/ProductFormFields";
 export { ProductModal } from "./ui/ProductModal";
 export { Price } from "./ui/Price";

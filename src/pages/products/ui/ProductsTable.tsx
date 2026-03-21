@@ -20,9 +20,10 @@ import {
   fetchProduct,
   fetchProducts,
   Price,
-  ProductForm,
   ProductModal,
 } from "@/entities/product";
+import { AddProductForm } from "@/features/add-product";
+import { EditProductForm } from "@/features/edit-product";
 import type { ProductListItem } from "@/entities/product";
 import styles from "./ProductsTable.module.css";
 import Image from "next/image";
@@ -260,14 +261,14 @@ export function ProductsTable() {
   return (
     <>
       <Modal open={isAddOpen} onOpenChange={setIsAddOpen}>
-        <ProductForm onClose={handleCloseAdd} />
+        <AddProductForm onClose={handleCloseAdd} />
       </Modal>
       <Modal
         open={editProductId !== null}
         onOpenChange={(open) => !open && setEditProductId(null)}
       >
         {editProduct && (
-          <ProductForm product={editProduct} onClose={handleCloseEdit} />
+          <EditProductForm product={editProduct} onClose={handleCloseEdit} />
         )}
       </Modal>
       <Modal
