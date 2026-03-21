@@ -28,11 +28,9 @@ export function SearchBar({
 
   const pushParam = useDebouncedCallback(
     (newValue: string) => {
-      const params = new URLSearchParams(searchParams?.toString());
+      const params = new URLSearchParams();
       if (newValue) {
         params.set(paramName, newValue);
-      } else {
-        params.delete(paramName);
       }
       router.replace({ pathname, query: Object.fromEntries(params.entries()) });
     },

@@ -71,10 +71,10 @@ export function LoginForm() {
 
   return (
     <Paper className={styles.card}>
+      <Logo size="md" />
       <div className={styles.langSwitcher}>
         <LanguageSwitcher />
       </div>
-      <Logo size="md" />
       <div className={styles.header}>
         <h1 className={styles.title}>{t("title")}</h1>
         <p className={styles.subtitle}>{t("subtitle")}</p>
