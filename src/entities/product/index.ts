@@ -5,8 +5,6 @@ export { fetchProduct, fetchProducts } from "./api/productsApi";
 export type { ProductsParams } from "./api/productsApi";
 export { proxyProduct } from "./api/proxyProduct";
 export { proxyProducts } from "./api/proxyProducts";
-export { proxyAddProduct } from "../../features/add-product/api/proxyAddProduct";
-export { proxyUpdateProduct } from "../../features/edit-product/api/proxyUpdateProduct";
 export { ProductFormFields } from "./ui/ProductFormFields";
 export { ProductModal } from "./ui/ProductModal";
 export { Price } from "./ui/Price";

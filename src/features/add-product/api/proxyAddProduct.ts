@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { API_URL } from "@/shared/config/env";
-import type { Product } from "../../../entities/product/model/types";
-import { productBodySchema } from "../../../entities/product/model/schema";
 import { ApiError, ValidationError } from "@/shared/lib/error";
 import { handleApiError } from "@/shared/api/handleApiError";
+import { Product, productBodySchema } from "@/entities/product";
 
 export async function proxyAddProduct(
   request: NextRequest,
