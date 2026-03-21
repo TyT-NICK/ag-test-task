@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ag-test-task
 
-## Getting Started
+Приложение для управления товарами на Next.js, выполненное в рамках тестового задания.
 
-First, run the development server:
+**Демо:** [ag-test-task-three.vercel.app](https://ag-test-task-three.vercel.app/en/login?from=%2F)
+
+## Начало работы
+
+Установите зависимости:
+
+```bash
+npm install
+```
+
+Создайте файл `.env.local` в корне проекта:
+
+```
+API_URL=https://dummyjson.com
+```
+
+Запустите сервер разработки:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Откройте [http://localhost:3000](http://localhost:3000) в браузере.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Особенности реализации
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Аутентификация
 
-## Learn More
+Токены никогда не передаются на клиент — все запросы к внешнему API проксируются через Next.js API Routes, а `accessToken` и `refreshToken` хранятся в `httpOnly`-куках (`secure`, `sameSite: strict`).
 
-To learn more about Next.js, take a look at the following resources:
+**«Запомнить меня»** — если опция не выбрана, куки сессионные (без `maxAge`) и удаляются при закрытии браузера. При закрытии вкладки дополнительно срабатывает `navigator.sendBeacon` с запросом на логаут, чтобы инвалидировать токен на сервере.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Тихое обновление токенов** — Axios-интерцептор перехватывает ответы с кодом `401` и автоматически вызывает `/api/auth/refresh`. Параллельные запросы, упавшие в момент обновления, ставятся в очередь и повторяются после его завершения.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Страница товаров
 
-## Deploy on Vercel
+**Оптимистичные обновления** — добавление и редактирование товара применяются в кеше React Query немедленно, не дожидаясь ответа сервера. При ошибке затронутые запросы инвалидируются и данные автоматически перезапрашиваются. Логика вынесена в переиспользуемый хук `useOptimisticMutation`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+_Note: Поскольку используется сторонний API, изменения не сохраняются на сервере и сбрасываются при перезагрузке страницы._
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Предзагрузка в idle-время** — пока пользователь не взаимодействует со страницей, детали каждого товара из текущей страницы таблицы поочерёдно предзагружаются через `requestIdleCallback`. При открытии модалки с деталями данные уже в кеше.
+
+**Сортировка и пагинация через URL** — состояние таблицы (страница, сортировка, поиск) хранится в search-параметрах. При смене поиска параметр страницы сбрасывается. Ссылки можно копировать и открывать напрямую.
+
+**Скелетон при загрузке** — при каждом запросе (первый вход, смена страницы, сортировки, поиска) таблица переходит в скелетон-режим. Пагинация при этом не пропадает: `keepPreviousData` сохраняет предыдущие данные в кеше, за счёт чего компонент пагинации остаётся видимым на протяжении всех последующих загрузок.
+
+## Скрипты
+
+| Команда             | Описание                           |
+| ------------------- | ---------------------------------- |
+| `npm run dev`       | Запуск сервера разработки          |
+| `npm run build`     | Сборка для продакшена              |
+| `npm run start`     | Запуск продакшен-сервера           |
+| `npm run lint`      | Запуск ESLint                      |
+| `npm run typecheck` | Проверка типов TypeScript          |
+| `npm run format`    | Форматирование кода через Prettier |
