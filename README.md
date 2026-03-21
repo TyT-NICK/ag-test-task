@@ -2,7 +2,7 @@
 
 Приложение для управления товарами на Next.js, выполненное в рамках тестового задания.
 
-**Демо:** [ag-test-task-three.vercel.app](https://ag-test-task-three.vercel.app/en/login?from=%2F)
+**Демо:** [ag-test-task-three.vercel.app](https://ag-test-task-three.vercel.app/en/login?from=%2F) (первая загрузка может быть немного долгой)
 
 ## Начало работы
 
