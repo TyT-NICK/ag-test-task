@@ -4,7 +4,7 @@ import { useForm, UseFormProps } from "react-hook-form";
 import { standardSchemaResolver } from "@hookform/resolvers/standard-schema";
 import z, { ZodObject, ZodRawShape } from "zod";
 
-const useZodForm = <TShape extends ZodRawShape>(
+export const useZodForm = <TShape extends ZodRawShape>(
   schema: ZodObject<TShape>,
   useFormProps?: UseFormProps<z.output<ZodObject<TShape>>>,
 ) => {
@@ -14,5 +14,3 @@ const useZodForm = <TShape extends ZodRawShape>(
     ...useFormProps,
   });
 };
-
-export default useZodForm;

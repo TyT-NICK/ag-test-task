@@ -7,8 +7,7 @@ import {
   type ProductListItem,
   type ProductsResponse,
 } from "@/entities/product";
-import useZodForm from "@/shared/lib/hooks/useZodForm";
-import { useOptimisticMutation } from "@/shared/lib/hooks/useOptimisticMutation";
+import { useZodForm, useOptimisticMutation } from "@/shared/lib/hooks";
 import { Button } from "@/shared/ui";
 import styles from "./AddProductForm.module.css";
 import { addProduct } from "../api/addProduct";

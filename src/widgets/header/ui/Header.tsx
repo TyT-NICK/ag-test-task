@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { logoutApi, unregisterUnloadLogout } from "@/features/auth";
@@ -27,10 +28,14 @@ export function Header() {
         <h1 className={styles.title}>{t("products")}</h1>
       </div>
       <div className={styles.center}>
-        <SearchBar placeholder={t("searchPlaceholder")} />
+        <Suspense>
+          <SearchBar placeholder={t("searchPlaceholder")} />
+        </Suspense>
       </div>
       <div className={styles.right}>
-        <LanguageSwitcher />
+        <Suspense>
+          <LanguageSwitcher />
+        </Suspense>
         <UserInfo onClick={handleLogout} />
       </div>
     </header>

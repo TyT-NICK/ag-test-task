@@ -23,5 +23,5 @@ export const productBodySchema = z.object({
     .optional(),
   brand: z.string().optional(),
   category: z.string().optional(),
-  thumbnail: z.string().optional(),
+  thumbnail: z.url("invalidUrl").optional(),
 });

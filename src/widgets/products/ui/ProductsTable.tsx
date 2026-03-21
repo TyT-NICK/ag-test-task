@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import { useIdlePrefetch } from "@/shared/lib/hooks/useIdlePrefetch";
+import { useIdlePrefetch } from "@/shared/lib/hooks";
 import {
   keepPreviousData,
   useQuery,
@@ -26,7 +26,6 @@ import { AddProductForm } from "@/features/add-product";
 import { EditProductForm } from "@/features/edit-product";
 import type { ProductListItem } from "@/entities/product";
 import styles from "./ProductsTable.module.css";
-import Image from "next/image";
 
 const LIMIT = 20;
 
@@ -112,7 +111,8 @@ export function ProductsTable() {
           size: COLUMN_SIZES.thumbnail,
           enableSorting: false,
           cell: ({ getValue }) => (
-            <Image
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
               src={getValue()}
               alt=""
               width={36}

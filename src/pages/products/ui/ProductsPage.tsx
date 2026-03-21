@@ -2,8 +2,8 @@ import { cookies } from "next/headers";
 import { getLocale } from "next-intl/server";
 import { redirect } from "@/shared/i18n/navigation";
 import { Header } from "@/widgets/header";
-import { ProductsTable } from "./ProductsTable";
 import styles from "./ProductsPage.module.css";
+import { ProductsTable } from "@/widgets/products";
 
 export async function ProductsPage() {
   const [cookieStore, locale] = await Promise.all([cookies(), getLocale()]);

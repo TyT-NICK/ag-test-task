@@ -61,7 +61,8 @@
     "positive": "Must be a positive number",
     "integer": "Must be a whole number",
     "minValue": "Value is too small",
-    "maxValue": "Value is too large"
+    "maxValue": "Value is too large",
+    "invalidUrl": "Must be a valid URL"
   },
   "common": {
     "loading": "Loading...",

@@ -11,7 +11,7 @@ import { z } from "zod";
 import { loginApi } from "../api/loginApi";
 import { loginCredentialsSchema } from "../model/schema";
 import { registerUnloadLogout } from "../lib/unloadLogout";
-import useZodForm from "@/shared/lib/hooks/useZodForm";
+import { useZodForm } from "@/shared/lib/hooks";
 import {
   Button,
   Checkbox,
