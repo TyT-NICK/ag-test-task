@@ -25,9 +25,10 @@ const ALIGN_TO_JUSTIFY = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getColumnStyle(column: Column<any, unknown>): React.CSSProperties {
-  const { meta } = column.columnDef;
+  const { meta, minSize } = column.columnDef;
   return {
     ...(!meta?.flex && { width: column.getSize() }),
+    ...(meta?.flex && minSize && { minWidth: minSize }),
     ...(meta?.align && { textAlign: meta.align }),
   };
 }
@@ -152,9 +153,18 @@ export function Table<TData>({
   const leafColumns = table.getAllLeafColumns();
   const t = useTranslations("common");
 
+  const tableMinWidth = useMemo(
+    () =>
+      leafColumns.reduce((sum, col) => {
+        const { meta, minSize } = col.columnDef;
+        return sum + (meta?.flex ? (minSize ?? 0) : col.getSize());
+      }, 0) || undefined,
+    [leafColumns],
+  );
+
   return (
     <div className={styles.wrapper}>
-      <table className={styles.table}>
+      <table className={styles.table} style={{ minWidth: tableMinWidth }}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id} className={styles.headerRow}>

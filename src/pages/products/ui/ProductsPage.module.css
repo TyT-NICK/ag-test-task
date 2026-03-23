@@ -1,5 +1,5 @@
 .page {
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -11,4 +11,8 @@
   padding: 24px 32px;
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 768px) {
+    padding-inline: 16px;
+  }
 }

@@ -126,6 +126,7 @@ export function ProductsTable() {
           header: t("columns.name"),
           enableSorting: true,
           meta: { flex: true },
+          minSize: 300,
           cell: ({ getValue, row }) => (
             <div className={styles.titleCell}>
               <span className={styles.titleText}>{getValue()}</span>
