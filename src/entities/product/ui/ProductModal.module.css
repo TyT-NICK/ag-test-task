@@ -6,6 +6,25 @@
   max-width: 560px;
 }
 
+@media (max-width: 767px) {
+  .root {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .policies {
+    grid-template-columns: 1fr;
+  }
+
+  .policyValue {
+    text-align: left;
+  }
+}
+
 .header {
   display: flex;
   gap: 16px;
@@ -101,27 +120,22 @@
 }
 
 .policies {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 16px;
   padding-top: 20px;
   border-top: 1px solid var(--color-neutral-200);
-}
-
-.policy {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
 }
 
 .policyLabel {
   font-size: 0.8125rem;
   color: var(--color-neutral-500);
-  flex-shrink: 0;
+  align-self: center;
 }
 
 .policyValue {
   font-size: 0.8125rem;
   color: var(--color-neutral-700);
   text-align: right;
+  align-self: center;
 }

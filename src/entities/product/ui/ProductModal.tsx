@@ -80,22 +80,16 @@ export function ProductModal({ product }: ProductModalProps) {
       )}
 
       <div className={styles.policies}>
-        <div className={styles.policy}>
-          <span className={styles.policyLabel}>{t("warranty")}</span>
-          <span className={styles.policyValue}>
-            {product.warrantyInformation}
-          </span>
-        </div>
-        <div className={styles.policy}>
-          <span className={styles.policyLabel}>{t("shipping")}</span>
-          <span className={styles.policyValue}>
-            {product.shippingInformation}
-          </span>
-        </div>
-        <div className={styles.policy}>
-          <span className={styles.policyLabel}>{t("returnPolicy")}</span>
-          <span className={styles.policyValue}>{product.returnPolicy}</span>
-        </div>
+        <span className={styles.policyLabel}>{t("warranty")}</span>
+        <span className={styles.policyValue}>
+          {product.warrantyInformation}
+        </span>
+        <span className={styles.policyLabel}>{t("shipping")}</span>
+        <span className={styles.policyValue}>
+          {product.shippingInformation}
+        </span>
+        <span className={styles.policyLabel}>{t("returnPolicy")}</span>
+        <span className={styles.policyValue}>{product.returnPolicy}</span>
       </div>
     </div>
   );

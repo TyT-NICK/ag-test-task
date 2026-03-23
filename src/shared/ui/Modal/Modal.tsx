@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { createPortal } from "react-dom";
 import type { ReactNode } from "react";
 import { Paper } from "@/shared/ui/Paper";
+import { CloseIcon } from "@/shared/ui/icons";
 import styles from "./Modal.module.css";
 
 type ModalProps = {
@@ -32,8 +33,20 @@ export function Modal({ open, onOpenChange, children }: ModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.97, y: -8 }}
             transition={TRANSITION}
+            className={styles.container}
           >
-            <Paper className={styles.popup}>{children}</Paper>
+            <Paper className={styles.popup}>
+              <div className={styles.closeButtonWrapper}>
+                <button
+                  className={styles.closeButton}
+                  onClick={() => onOpenChange(false)}
+                  aria-label="Close"
+                >
+                  <CloseIcon size={18} />
+                </button>
+              </div>
+              {children}
+            </Paper>
           </motion.div>
         </motion.div>
       )}

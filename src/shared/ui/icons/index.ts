@@ -1,4 +1,5 @@
 export { CheckIcon } from "./CheckIcon";
+export { CloseIcon } from "./CloseIcon";
 export { DotsHorizontalIcon } from "./DotsHorizontalIcon";
 export { ChevronDownIcon } from "./ChevronDownIcon";
 export { ChevronLeftIcon } from "./ChevronLeftIcon";
